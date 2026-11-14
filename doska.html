@@ -6,305 +6,160 @@
 <title>Interaktiv Doska</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-
   :root {
-    --bg:        #050d1a;
-    --surface:   #0a1628;
-    --card:      #0f1f36;
-    --border:    #1a3155;
-    --accent:    #1a6eff;
-    --accent2:   #00cfff;
-    --text:      #e8f0fe;
-    --muted:     #6b8ab5;
-    --new-badge: #ff4b4b;
-    --radius:    14px;
+    --bg: #050d1a;
+    --surface: #0a1628;
+    --card: #0f1f36;
+    --border: #1a3155;
+    --accent: #1a6eff;
+    --accent2: #00cfff;
+    --text: #e8f0fe;
+    --muted: #6b8ab5;
+    --radius: 14px;
   }
-
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
 
-  body {
-    font-family: 'Inter', sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    min-height: 100vh;
-    overflow-x: hidden;
-  }
-
-  /* ── HEADER ── */
+  /* HEADER */
   header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 18px 40px;
-    background: var(--surface);
-    border-bottom: 1px solid var(--border);
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    backdrop-filter: blur(12px);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 16px 40px; background: var(--surface);
+    border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 100;
   }
-
-  .logo {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
-
+  .logo { display: flex; align-items: center; gap: 12px; }
   .logo-icon {
-    width: 42px; height: 42px;
+    width: 40px; height: 40px;
     background: linear-gradient(135deg, var(--accent), var(--accent2));
-    border-radius: 10px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 20px;
+    border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 18px;
   }
+  .logo-text h1 { font-size: 18px; font-weight: 700; }
+  .logo-text p  { font-size: 11px; color: var(--muted); }
+  .clock-time { font-size: 26px; font-weight: 300; letter-spacing: 2px; color: var(--accent2); font-variant-numeric: tabular-nums; }
+  .clock-date { font-size: 11px; color: var(--muted); text-align: right; }
+  .dot { width: 8px; height: 8px; border-radius: 50%; background: #22c55e; animation: pulse 2s infinite; display: inline-block; margin-right: 6px; }
+  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.5;transform:scale(.8)} }
 
-  .logo-text h1 {
-    font-size: 20px;
-    font-weight: 700;
-    letter-spacing: -0.3px;
-  }
-
-  .logo-text p {
-    font-size: 12px;
-    color: var(--muted);
-    font-weight: 400;
-  }
-
-  .header-right {
-    display: flex;
-    align-items: center;
-    gap: 24px;
-  }
-
-  .clock {
-    text-align: right;
-  }
-
-  .clock-time {
-    font-size: 28px;
-    font-weight: 300;
-    letter-spacing: 2px;
-    font-variant-numeric: tabular-nums;
-    color: var(--accent2);
-  }
-
-  .clock-date {
-    font-size: 12px;
-    color: var(--muted);
-  }
-
-  .refresh-indicator {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    font-size: 12px;
-    color: var(--muted);
-  }
-
-  .dot {
-    width: 8px; height: 8px;
-    border-radius: 50%;
-    background: #22c55e;
-    animation: pulse 2s infinite;
-  }
-
-  @keyframes pulse {
-    0%, 100% { opacity: 1; transform: scale(1); }
-    50%       { opacity: .5; transform: scale(.8); }
-  }
-
-  /* ── GRID ── */
-  main {
-    padding: 32px 40px 40px;
-  }
-
-  .section-title {
-    font-size: 13px;
-    font-weight: 500;
-    color: var(--muted);
-    text-transform: uppercase;
-    letter-spacing: 1.2px;
-    margin-bottom: 20px;
-  }
-
-  .grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
-    gap: 20px;
-  }
-
-  /* ── CARD ── */
-  .card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 22px 24px;
-    position: relative;
+  /* HOME — teacher grid */
+  #home { padding: 40px; }
+  .home-title { font-size: 13px; color: var(--muted); text-transform: uppercase; letter-spacing: 1.2px; margin-bottom: 24px; font-weight: 500; }
+  .teacher-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px; }
+  .teacher-card {
+    background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
+    padding: 28px 20px; text-align: center; cursor: pointer;
     transition: transform .2s, border-color .2s;
   }
-
-  .card:hover {
-    transform: translateY(-2px);
-    border-color: var(--accent);
+  .teacher-card:hover { transform: translateY(-3px); border-color: var(--accent); }
+  .teacher-avatar {
+    width: 72px; height: 72px; border-radius: 50%; margin: 0 auto 14px;
+    overflow: hidden; border: 3px solid var(--accent);
   }
-
-  .card.is-new {
-    border-color: rgba(26,110,255,.5);
-    box-shadow: 0 0 24px rgba(26,110,255,.12);
-  }
-
-  /* NEW badge */
-  .badge-new {
-    position: absolute;
-    top: 14px; right: 14px;
-    background: var(--new-badge);
-    color: #fff;
-    font-size: 10px;
-    font-weight: 700;
-    padding: 3px 8px;
-    border-radius: 20px;
-    letter-spacing: .8px;
-    animation: badgePop .4s cubic-bezier(.34,1.56,.64,1);
-  }
-
-  @keyframes badgePop {
-    from { transform: scale(0); opacity: 0; }
-    to   { transform: scale(1); opacity: 1; }
-  }
-
-  /* Card header */
-  .card-header {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 14px;
-  }
-
-  .avatar {
-    width: 44px; height: 44px;
-    border-radius: 50%;
+  .teacher-avatar img { width: 100%; height: 100%; object-fit: cover; }
+  .teacher-avatar-initials {
+    width: 72px; height: 72px; border-radius: 50%; margin: 0 auto 14px;
     background: linear-gradient(135deg, var(--accent), var(--accent2));
     display: flex; align-items: center; justify-content: center;
-    font-size: 18px;
-    font-weight: 700;
-    flex-shrink: 0;
+    font-size: 26px; font-weight: 700; color: #fff;
+    border: 3px solid var(--accent);
   }
-
-  .card-meta h3 {
-    font-size: 15px;
-    font-weight: 600;
+  .teacher-name { font-size: 15px; font-weight: 600; margin-bottom: 6px; }
+  .teacher-count { font-size: 12px; color: var(--muted); }
+  .new-dot {
+    width: 10px; height: 10px; border-radius: 50%; background: #ff4b4b;
+    display: inline-block; margin-left: 6px; vertical-align: middle;
   }
+  .empty-home { text-align: center; padding: 80px 20px; color: var(--muted); }
+  .empty-home .icon { font-size: 52px; margin-bottom: 14px; }
 
-  .card-meta-row {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-top: 3px;
+  /* CHAT view */
+  #chat { display: none; padding: 0; }
+  .chat-header {
+    display: flex; align-items: center; gap: 14px;
+    padding: 16px 40px; background: var(--surface); border-bottom: 1px solid var(--border);
+    position: sticky; top: 65px; z-index: 90;
   }
-
-  .subject-tag {
-    font-size: 11px;
-    font-weight: 500;
-    padding: 2px 8px;
-    background: rgba(26,110,255,.15);
-    color: var(--accent2);
-    border-radius: 20px;
+  .back-btn {
+    background: none; border: 1px solid var(--border); color: var(--text);
+    padding: 8px 16px; border-radius: 8px; cursor: pointer; font-size: 13px;
+    display: flex; align-items: center; gap: 6px; transition: border-color .2s;
   }
-
-  .time-tag {
-    font-size: 11px;
-    color: var(--muted);
+  .back-btn:hover { border-color: var(--accent); }
+  .chat-teacher-avatar { width: 42px; height: 42px; border-radius: 50%; overflow: hidden; border: 2px solid var(--accent); }
+  .chat-teacher-avatar img { width: 100%; height: 100%; object-fit: cover; }
+  .chat-teacher-initials {
+    width: 42px; height: 42px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 17px; font-weight: 700; border: 2px solid var(--accent);
   }
+  .chat-teacher-name { font-size: 16px; font-weight: 600; }
 
-  /* Type badge */
-  .type-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
-    font-size: 11px;
-    font-weight: 500;
-    padding: 3px 10px;
-    border-radius: 20px;
-    margin-bottom: 10px;
+  .messages { padding: 24px 40px; display: flex; flex-direction: column; gap: 16px; }
+
+  /* MESSAGE bubble */
+  .msg {
+    background: var(--card); border: 1px solid var(--border); border-radius: 12px;
+    padding: 16px 18px; max-width: 780px;
   }
-
+  .msg-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+  .msg-time { font-size: 11px; color: var(--muted); }
+  .msg-type { font-size: 11px; padding: 2px 8px; border-radius: 20px; }
   .type-text  { background: rgba(34,197,94,.12);  color: #22c55e; }
   .type-image { background: rgba(168,85,247,.12); color: #a855f7; }
   .type-video { background: rgba(249,115,22,.12); color: #f97316; }
   .type-file  { background: rgba(234,179,8,.12);  color: #eab308; }
   .type-voice { background: rgba(236,72,153,.12); color: #ec4899; }
-
-  /* Content */
-  .card-content {
-    font-size: 14px;
-    line-height: 1.65;
-    color: rgba(232,240,254,.85);
-  }
-
-  .card-content.text-content {
-    max-height: 120px;
-    overflow: hidden;
-    display: -webkit-box;
-    -webkit-line-clamp: 5;
-    -webkit-box-orient: vertical;
-  }
-
-  /* Media */
-  .media-wrap {
-    margin-top: 12px;
-    border-radius: 8px;
-    overflow: hidden;
-    background: var(--surface);
-  }
-
-  .media-wrap img,
-  .media-wrap video {
-    width: 100%;
-    display: block;
-    max-height: 220px;
-    object-fit: cover;
-  }
-
-  /* File row */
+  .msg-text { font-size: 14px; line-height: 1.65; color: rgba(232,240,254,.9); white-space: pre-wrap; }
+  .msg-img { width: 100%; max-height: 480px; object-fit: contain; border-radius: 8px; margin-top: 10px; display: block; background: var(--surface); }
+  .msg-video { width: 100%; max-height: 480px; border-radius: 8px; margin-top: 10px; display: block; }
   .file-row {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 10px 14px;
-    background: var(--surface);
-    border-radius: 8px;
-    margin-top: 10px;
+    display: flex; align-items: center; gap: 10px;
+    padding: 10px 14px; background: var(--surface); border-radius: 8px; margin-top: 10px;
     border: 1px solid var(--border);
   }
-
-  .file-icon { font-size: 22px; }
-  .file-name { font-size: 13px; font-weight: 500; color: var(--text); }
-  .file-link {
-    margin-left: auto;
-    font-size: 11px;
-    color: var(--accent);
-    text-decoration: none;
-    padding: 4px 10px;
-    border: 1px solid var(--accent);
-    border-radius: 20px;
+  .file-name { font-size: 13px; font-weight: 500; flex: 1; }
+  .file-dl {
+    font-size: 11px; color: var(--accent); text-decoration: none;
+    padding: 4px 10px; border: 1px solid var(--accent); border-radius: 20px;
   }
-  .file-link:hover { background: var(--accent); color: #fff; }
-
-  /* Empty state */
-  .empty-state {
-    text-align: center;
-    padding: 80px 20px;
-    color: var(--muted);
+  .file-dl:hover { background: var(--accent); color: #fff; }
+  .new-badge {
+    background: #ff4b4b; color: #fff; font-size: 10px; font-weight: 700;
+    padding: 2px 7px; border-radius: 20px; margin-left: 8px;
   }
+  .empty-chat { text-align: center; padding: 60px 20px; color: var(--muted); }
 
-  .empty-state .icon { font-size: 56px; margin-bottom: 16px; }
-  .empty-state h2 { font-size: 20px; font-weight: 500; margin-bottom: 8px; }
-  .empty-state p  { font-size: 14px; }
-
-  /* Scrollbar */
-  ::-webkit-scrollbar { width: 6px; }
-  ::-webkit-scrollbar-track { background: var(--bg); }
-  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+  /* FEEDBACK */
+  .feedback-btn {
+    position: fixed; bottom: 28px; right: 28px;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    color: #fff; border: none; border-radius: 50px; padding: 12px 22px;
+    font-size: 13px; font-weight: 600; cursor: pointer; z-index: 200;
+    box-shadow: 0 4px 20px rgba(26,110,255,.4); transition: transform .2s;
+  }
+  .feedback-btn:hover { transform: scale(1.05); }
+  .feedback-modal {
+    display: none; position: fixed; inset: 0;
+    background: rgba(0,0,0,.6); z-index: 300; align-items: center; justify-content: center;
+  }
+  .feedback-modal.open { display: flex; }
+  .feedback-box {
+    background: var(--card); border: 1px solid var(--border); border-radius: 16px;
+    padding: 28px; width: 420px; max-width: 90vw;
+  }
+  .feedback-box h3 { font-size: 17px; font-weight: 600; margin-bottom: 6px; }
+  .feedback-box p  { font-size: 13px; color: var(--muted); margin-bottom: 16px; }
+  .feedback-box textarea {
+    width: 100%; background: var(--surface); border: 1px solid var(--border);
+    border-radius: 8px; color: var(--text); padding: 12px; font-size: 14px;
+    font-family: inherit; resize: vertical; min-height: 110px; outline: none;
+  }
+  .feedback-box textarea:focus { border-color: var(--accent); }
+  .feedback-actions { display: flex; gap: 10px; margin-top: 14px; justify-content: flex-end; }
+  .btn-cancel { background: none; border: 1px solid var(--border); color: var(--muted); padding: 9px 18px; border-radius: 8px; cursor: pointer; font-size: 13px; }
+  .btn-send { background: var(--accent); border: none; color: #fff; padding: 9px 20px; border-radius: 8px; cursor: pointer; font-size: 13px; font-weight: 600; }
+  .btn-send:hover { background: #1558d4; }
+  .feedback-success { text-align: center; padding: 20px 0; }
+  .feedback-success .icon { font-size: 42px; margin-bottom: 10px; }
 </style>
 </head>
 <body>
@@ -314,152 +169,230 @@
     <div class="logo-icon">📋</div>
     <div class="logo-text">
       <h1>Interaktiv Doska</h1>
-      <p>Ustozlar materiali — real vaqt</p>
+      <p><span class="dot"></span>Jonli</p>
     </div>
   </div>
-  <div class="header-right">
-    <div class="refresh-indicator">
-      <div class="dot"></div>
-      <span id="refresh-label">Yangilanmoqda…</span>
-    </div>
-    <div class="clock">
-      <div class="clock-time" id="clock">00:00:00</div>
-      <div class="clock-date" id="clock-date"></div>
-    </div>
+  <div style="text-align:right">
+    <div class="clock-time" id="clock">00:00:00</div>
+    <div class="clock-date" id="clock-date"></div>
   </div>
 </header>
 
-<main>
-  <div class="section-title">Oxirgi materiallar</div>
-  <div class="grid" id="grid">
-    <div class="empty-state">
-      <div class="icon">📭</div>
-      <h2>Hali material yo'q</h2>
-      <p>Ustozlar Telegram botga material yuborishsa, bu yerda ko'rinadi.</p>
+<!-- HOME -->
+<div id="home">
+  <div class="home-title">Ustozlar</div>
+  <div class="teacher-grid" id="teacher-grid">
+    <div class="empty-home">
+      <div class="icon">👨‍🏫</div>
+      <p>Hali ustozlar yo'q</p>
     </div>
   </div>
-</main>
+</div>
+
+<!-- CHAT -->
+<div id="chat">
+  <div class="chat-header">
+    <button class="back-btn" onclick="goHome()">← Orqaga</button>
+    <div id="chat-avatar"></div>
+    <div class="chat-teacher-name" id="chat-name"></div>
+  </div>
+  <div class="messages" id="messages"></div>
+</div>
+
+<!-- FEEDBACK -->
+<button class="feedback-btn" onclick="openFeedback()">💬 Fikr bildirish</button>
+<div class="feedback-modal" id="feedback-modal">
+  <div class="feedback-box">
+    <div id="fb-form">
+      <h3>Fikr bildirish</h3>
+      <p>Kamchilik yoki takliflaringizni yozing</p>
+      <textarea id="fb-text" placeholder="Yozing..."></textarea>
+      <div class="feedback-actions">
+        <button class="btn-cancel" onclick="closeFeedback()">Bekor</button>
+        <button class="btn-send" onclick="sendFeedback()">Yuborish</button>
+      </div>
+    </div>
+    <div id="fb-success" class="feedback-success" style="display:none">
+      <div class="icon">✅</div>
+      <p>Fikringiz qabul qilindi!</p>
+    </div>
+  </div>
+</div>
 
 <script>
-  // ── Clock ──
+  // Clock
   function updateClock() {
     const now = new Date();
-    document.getElementById('clock').textContent =
-      now.toLocaleTimeString('uz-UZ', { hour12: false });
+    document.getElementById('clock').textContent = now.toLocaleTimeString('uz-UZ', {hour12:false});
     const days = ['Yakshanba','Dushanba','Seshanba','Chorshanba','Payshanba','Juma','Shanba'];
     const months = ['yanvar','fevral','mart','aprel','may','iyun','iyul','avgust','sentabr','oktabr','noyabr','dekabr'];
     document.getElementById('clock-date').textContent =
       `${days[now.getDay()]}, ${now.getDate()} ${months[now.getMonth()]} ${now.getFullYear()}`;
   }
-  updateClock();
-  setInterval(updateClock, 1000);
+  updateClock(); setInterval(updateClock, 1000);
 
-  // ── Type metadata ──
-  const TYPE_META = {
-    text:  { label: 'Matn',         icon: '📝', cls: 'type-text'  },
-    image: { label: 'Rasm',         icon: '🖼️',  cls: 'type-image' },
-    video: { label: 'Video',        icon: '🎬', cls: 'type-video' },
-    file:  { label: 'Fayl',         icon: '📎', cls: 'type-file'  },
-    voice: { label: 'Ovozli xabar', icon: '🎙️', cls: 'type-voice' },
-  };
+  let allData = {teachers:{}, materials:[]};
+  let currentTeacher = null;
+  let seenIds = new Set();
 
-  function fileIcon(name = '') {
-    const ext = name.split('.').pop().toLowerCase();
-    if (['pdf'].includes(ext)) return '📄';
+  function avatarHTML(name, photo, big=false) {
+    const size = big ? 72 : 42;
+    const cls = big ? 'teacher-avatar' : 'chat-teacher-avatar';
+    const initCls = big ? 'teacher-avatar-initials' : 'chat-teacher-initials';
+    if (photo) {
+      return `<div class="${cls}" style="width:${size}px;height:${size}px"><img src="${photo}" onerror="this.parentElement.outerHTML=initAvatar('${name}',${big})"></div>`;
+    }
+    return `<div class="${initCls}" style="width:${size}px;height:${size}px;font-size:${big?26:17}px">${name.charAt(0).toUpperCase()}</div>`;
+  }
+
+  function initAvatar(name, big=false) {
+    const size = big ? 72 : 42;
+    const cls = big ? 'teacher-avatar-initials' : 'chat-teacher-initials';
+    return `<div class="${cls}" style="width:${size}px;height:${size}px;font-size:${big?26:17}px">${name.charAt(0).toUpperCase()}</div>`;
+  }
+
+  function fileIcon(name='') {
+    const ext = (name.split('.').pop()||'').toLowerCase();
+    if (ext==='pdf') return '📄';
     if (['ppt','pptx'].includes(ext)) return '📊';
     if (['doc','docx'].includes(ext)) return '📝';
     if (['xls','xlsx'].includes(ext)) return '📈';
-    if (['zip','rar','7z'].includes(ext)) return '🗜️';
+    if (['zip','rar'].includes(ext)) return '🗜️';
     return '📎';
   }
 
-  function avatarChar(name) {
-    return name ? name.charAt(0).toUpperCase() : '?';
+  function typeLabel(t) {
+    return {text:'📝 Matn', image:'🖼️ Rasm', video:'🎬 Video', file:'📎 Fayl', voice:'🎙️ Ovoz'}[t]||t;
   }
 
-  function buildCard(m) {
-    const meta = TYPE_META[m.type] || TYPE_META.text;
-    const isNew = m.is_new;
+  function renderHome() {
+    const grid = document.getElementById('teacher-grid');
+    const teachers = allData.teachers || {};
+    const materials = allData.materials || [];
 
-    let mediaHTML = '';
-    if (m.type === 'image' && m.file_url) {
-      mediaHTML = `<div class="media-wrap"><img src="${m.file_url}" alt="rasm" loading="lazy"></div>`;
-    } else if (m.type === 'video' && m.file_url) {
-      mediaHTML = `<div class="media-wrap"><video src="${m.file_url}" controls playsinline></video></div>`;
-    } else if (m.type === 'file' && m.file_url) {
-      mediaHTML = `
-        <div class="file-row">
-          <span class="file-icon">${fileIcon(m.file_name)}</span>
-          <span class="file-name">${m.file_name || 'fayl'}</span>
-          <a class="file-link" href="${m.file_url}" target="_blank">Yuklab olish</a>
-        </div>`;
-    } else if (m.type === 'voice' && m.file_url) {
-      mediaHTML = `<div class="media-wrap" style="padding:12px"><audio src="${m.file_url}" controls style="width:100%"></audio></div>`;
+    if (!Object.keys(teachers).length) {
+      grid.innerHTML = `<div class="empty-home"><div class="icon">👨‍🏫</div><p>Hali ustozlar yo'q</p></div>`;
+      return;
     }
 
-    const textHTML = m.content
-      ? `<div class="card-content text-content">${m.content.replace(/</g,'&lt;').replace(/\n/g,'<br>')}</div>`
-      : '';
-
-    return `
-      <div class="card${isNew ? ' is-new' : ''}">
-        ${isNew ? '<span class="badge-new">YANGI</span>' : ''}
-        <div class="card-header">
-          <div class="avatar">${avatarChar(m.teacher_name)}</div>
-          <div class="card-meta">
-            <h3>👨‍🏫 ${m.teacher_name}</h3>
-            <div class="card-meta-row">
-              <span class="subject-tag">📚 ${m.subject}</span>
-              <span class="time-tag">🕐 ${m.time}</span>
-            </div>
-          </div>
-        </div>
-        <span class="type-badge ${meta.cls}">${meta.icon} ${meta.label}</span>
-        ${textHTML}
-        ${mediaHTML}
-      </div>`;
+    grid.innerHTML = Object.entries(teachers).map(([tid, t]) => {
+      const count = materials.filter(m => m.teacher_id === tid).length;
+      const hasNew = materials.some(m => m.teacher_id === tid && !seenIds.has(m.id));
+      return `
+        <div class="teacher-card" onclick="openChat('${tid}')">
+          ${avatarHTML(t.name, t.photo, true)}
+          <div class="teacher-name">${t.name}${hasNew ? '<span class="new-dot"></span>' : ''}</div>
+          <div class="teacher-count">${count} ta material</div>
+        </div>`;
+    }).join('');
   }
 
-  // ── Fetch & render ──
-  let knownIds = new Set();
+  function openChat(tid) {
+    currentTeacher = tid;
+    const t = allData.teachers[tid];
+    if (!t) return;
 
-  async function fetchMaterials() {
-    try {
-      const res = await fetch('/materials.json?t=' + Date.now());
-      const list = await res.json();
+    // Header
+    document.getElementById('chat-avatar').innerHTML = avatarHTML(t.name, t.photo, false);
+    document.getElementById('chat-name').textContent = t.name;
 
-      // Detect truly new items
-      const newOnes = list.filter(m => !knownIds.has(m.id));
-      newOnes.forEach(m => knownIds.add(m.id));
+    renderMessages(tid);
+    document.getElementById('home').style.display = 'none';
+    document.getElementById('chat').style.display = 'block';
+  }
 
-      const grid = document.getElementById('grid');
+  function renderMessages(tid) {
+    const msgs = (allData.materials || []).filter(m => m.teacher_id === tid);
+    const box = document.getElementById('messages');
 
-      if (!list.length) {
-        grid.innerHTML = `
-          <div class="empty-state">
-            <div class="icon">📭</div>
-            <h2>Hali material yo'q</h2>
-            <p>Ustozlar Telegram botga material yuborishsa, bu yerda ko'rinadi.</p>
+    if (!msgs.length) {
+      box.innerHTML = `<div class="empty-chat">📭 Hali material yuborilmagan</div>`;
+      return;
+    }
+
+    box.innerHTML = msgs.map(m => {
+      const isNew = !seenIds.has(m.id);
+      seenIds.add(m.id);
+
+      let content = '';
+      if (m.type === 'text') {
+        content = `<div class="msg-text">${m.content.replace(/</g,'&lt;')}</div>`;
+      } else if (m.type === 'image' && m.file_url) {
+        content = `
+          ${m.content ? `<div class="msg-text">${m.content.replace(/</g,'&lt;')}</div>`:''}
+          <img class="msg-img" src="${m.file_url}" loading="lazy">`;
+      } else if (m.type === 'video' && m.file_url) {
+        content = `
+          ${m.content ? `<div class="msg-text">${m.content.replace(/</g,'&lt;')}</div>`:''}
+          <video class="msg-video" src="${m.file_url}" controls playsinline></video>`;
+      } else if (m.type === 'file' && m.file_url) {
+        content = `
+          ${m.content ? `<div class="msg-text">${m.content.replace(/</g,'&lt;')}</div>`:''}
+          <div class="file-row">
+            <span style="font-size:22px">${fileIcon(m.file_name)}</span>
+            <span class="file-name">${m.file_name||'fayl'}</span>
+            <a class="file-dl" href="${m.file_url}" target="_blank" download>⬇ Yuklab olish</a>
           </div>`;
-        return;
+      } else if (m.type === 'voice' && m.file_url) {
+        content = `<audio src="${m.file_url}" controls style="width:100%;margin-top:8px"></audio>`;
       }
 
-      // Mark new for first 30 s
-      const now = Date.now();
-      const marked = list.map(m => ({
-        ...m,
-        is_new: newOnes.some(n => n.id === m.id) && (now - m.id < 30000)
-      }));
-
-      grid.innerHTML = marked.map(buildCard).join('');
-      document.getElementById('refresh-label').textContent = 'Jonli';
-    } catch (e) {
-      document.getElementById('refresh-label').textContent = 'Xato — qayta urinilmoqda';
-    }
+      return `
+        <div class="msg">
+          <div class="msg-header">
+            <div>
+              <span class="msg-type ${`type-${m.type}`}">${typeLabel(m.type)}</span>
+              ${isNew ? '<span class="new-badge">YANGI</span>' : ''}
+            </div>
+            <span class="msg-time">🕐 ${m.time}</span>
+          </div>
+          ${content}
+        </div>`;
+    }).join('');
   }
 
-  fetchMaterials();
-  setInterval(fetchMaterials, 5000);
+  function goHome() {
+    currentTeacher = null;
+    document.getElementById('chat').style.display = 'none';
+    document.getElementById('home').style.display = 'block';
+    renderHome();
+  }
+
+  async function fetchData() {
+    try {
+      const res = await fetch('/materials.json?t=' + Date.now());
+      allData = await res.json();
+      if (currentTeacher) {
+        renderMessages(currentTeacher);
+      } else {
+        renderHome();
+      }
+    } catch(e) {}
+  }
+
+  fetchData();
+  setInterval(fetchData, 5000);
+
+  // Feedback
+  function openFeedback() {
+    document.getElementById('fb-form').style.display='block';
+    document.getElementById('fb-success').style.display='none';
+    document.getElementById('fb-text').value='';
+    document.getElementById('feedback-modal').classList.add('open');
+  }
+  function closeFeedback() {
+    document.getElementById('feedback-modal').classList.remove('open');
+  }
+  async function sendFeedback() {
+    const text = document.getElementById('fb-text').value.trim();
+    if (!text) return;
+    try {
+      await fetch('/feedback', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({text})});
+    } catch(e){}
+    document.getElementById('fb-form').style.display='none';
+    document.getElementById('fb-success').style.display='block';
+    setTimeout(closeFeedback, 2000);
+  }
 </script>
 </body>
 </html>

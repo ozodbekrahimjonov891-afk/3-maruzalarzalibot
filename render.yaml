@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: doska-bot
+    runtime: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: python server.py
+    envVars:
+      - key: BOT_TOKEN
+        value: 9004196402:AAErmv1QGF5LEU52w2M-RVJfC6BIuTaR8Yo
+      - key: ADMIN_ID
+        value: "5782290811"
+      - key: WEBHOOK_URL
+        sync: false          # Render deploy bo'lgandan keyin siz to'ldirasiz
+    disk:
+      name: data
+      mountPath: /opt/render/project/src
+      sizeGB: 1

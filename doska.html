@@ -8,300 +8,293 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@700&display=swap');
 
 :root {
-  --bg:       #030d1f;
-  --surface:  #071428;
-  --card:     #0a1c35;
-  --card2:    #0d2140;
-  --border:   #1a3a6b;
-  --gold:     #c9972b;
-  --gold2:    #f0c060;
-  --gold-dim: rgba(201,151,43,.15);
-  --blue:     #1a6eff;
-  --cyan:     #00cfff;
-  --text:     #eef2ff;
-  --muted:    #6b8ab5;
-  --radius:   16px;
+  --bg:      #f7f0e3;
+  --surface: #fffaf2;
+  --card:    #fffcf5;
+  --border:  rgba(139,94,26,0.2);
+  --gold:    #8b5e1a;
+  --gold2:   #c9972b;
+  --gold3:   #e8b84b;
+  --text:    #3d2008;
+  --muted:   #8b7355;
+  --radius:  14px;
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; overflow-x: hidden; }
 
-/* ══ GIRIX PATTERN (SVG background) ══ */
+/* ── FON NAQSHI ── */
 body::before {
   content: '';
   position: fixed; inset: 0; z-index: 0; pointer-events: none;
-  background-image: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%23c9972b' stroke-width='0.4' opacity='0.08'%3E%3Cpolygon points='40,2 78,22 78,58 40,78 2,58 2,22'/%3E%3Cpolygon points='40,12 68,27 68,53 40,68 12,53 12,27'/%3E%3Cline x1='40' y1='2' x2='40' y2='78'/%3E%3Cline x1='2' y1='22' x2='78' y2='58'/%3E%3Cline x1='78' y1='22' x2='2' y2='58'/%3E%3C/g%3E%3C/svg%3E");
-  background-size: 80px 80px;
+  background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%238b5e1a' stroke-width='0.5' opacity='0.07'%3E%3Crect x='5' y='5' width='50' height='50' rx='2'/%3E%3Crect x='12' y='12' width='36' height='36' rx='1' transform='rotate(45 30 30)'/%3E%3Ccircle cx='30' cy='30' r='5'/%3E%3C/g%3E%3C/svg%3E");
+  background-size: 60px 60px;
 }
 
-/* ══ HEADER ══ */
+/* ── HEADER ── */
 header {
   position: sticky; top: 0; z-index: 100;
-  background: linear-gradient(180deg, rgba(7,20,40,.98) 0%, rgba(7,20,40,.92) 100%);
-  border-bottom: 1px solid rgba(201,151,43,.3);
-  backdrop-filter: blur(16px);
+  background: rgba(247,240,227,0.95);
+  border-bottom: 1px solid rgba(139,94,26,0.25);
+  backdrop-filter: blur(12px);
   padding: 0 40px;
   display: flex; align-items: center; justify-content: space-between;
-  height: 70px;
+  height: 68px;
 }
-
-/* Gold top line */
 header::before {
   content: '';
   position: absolute; top: 0; left: 0; right: 0; height: 2px;
-  background: linear-gradient(90deg, transparent, var(--gold), var(--gold2), var(--gold), transparent);
+  background: linear-gradient(90deg, transparent, var(--gold2), var(--gold3), var(--gold2), transparent);
+}
+header::after {
+  content: '';
+  position: absolute; bottom: 0; left: 0; right: 0; height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(139,94,26,0.3), transparent);
 }
 
-.logo { display: flex; align-items: center; gap: 14px; }
-
-.logo-emblem {
-  width: 44px; height: 44px; border-radius: 10px; position: relative;
-  background: linear-gradient(135deg, #0d2550, #1a3a6b);
-  border: 1px solid rgba(201,151,43,.5);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 20px;
-  box-shadow: 0 0 20px rgba(201,151,43,.2);
+.logo { display: flex; align-items: center; gap: 12px; }
+.logo-icon {
+  width: 42px; height: 42px; border-radius: 10px;
+  background: linear-gradient(135deg, var(--gold), var(--gold2));
+  display: flex; align-items: center; justify-content: center; font-size: 20px;
+  box-shadow: 0 2px 12px rgba(139,94,26,0.25);
 }
-
 .logo-text h1 {
   font-family: 'Playfair Display', serif;
-  font-size: 20px; font-weight: 700;
-  background: linear-gradient(135deg, var(--gold2), var(--gold));
-  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-  letter-spacing: .3px;
+  font-size: 19px; font-weight: 700; color: var(--text);
 }
-
 .logo-text p { font-size: 11px; color: var(--muted); margin-top: 1px; }
 
 .live-badge {
-  display: flex; align-items: center; gap: 6px;
-  background: rgba(34,197,94,.1); border: 1px solid rgba(34,197,94,.3);
-  border-radius: 20px; padding: 4px 10px; font-size: 11px; color: #22c55e;
+  display: flex; align-items: center; gap: 5px;
+  background: rgba(34,197,94,0.1); border: 1px solid rgba(34,197,94,0.3);
+  border-radius: 20px; padding: 4px 10px; font-size: 11px; color: #166534;
 }
 .dot { width: 7px; height: 7px; border-radius: 50%; background: #22c55e; animation: pulse 2s infinite; }
 @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.4;transform:scale(.7)} }
 
-.clock-wrap { text-align: right; }
-.clock-time { font-size: 28px; font-weight: 300; letter-spacing: 3px; color: var(--cyan); font-variant-numeric: tabular-nums; }
-.clock-date { font-size: 11px; color: var(--muted); margin-top: 1px; }
+.clock-time { font-size: 26px; font-weight: 300; color: var(--gold); letter-spacing: 2px; font-variant-numeric: tabular-nums; }
+.clock-date { font-size: 11px; color: var(--muted); text-align: right; margin-top: 1px; }
 
-/* ══ ORNAMENT DIVIDER ══ */
+/* ── BURCHAK BEZAKLARI ── */
+.corner-deco {
+  position: fixed; pointer-events: none; z-index: 0;
+  width: 100px; height: 100px;
+}
+.corner-deco.tl { top: 68px; left: 0; }
+.corner-deco.tr { top: 68px; right: 0; transform: scaleX(-1); }
+.corner-deco.bl { bottom: 0; left: 0; transform: scaleY(-1); }
+.corner-deco.br { bottom: 0; right: 0; transform: scale(-1); }
+
+/* ── ORNAMENT ── */
 .ornament {
   display: flex; align-items: center; gap: 12px;
-  margin: 32px 40px 20px;
-  position: relative; z-index: 1;
+  padding: 24px 40px 16px; position: relative; z-index: 1;
 }
-.ornament-line { flex: 1; height: 1px; background: linear-gradient(90deg, transparent, rgba(201,151,43,.4), transparent); }
+.ornament-line { flex: 1; height: 1px; background: linear-gradient(90deg, transparent, rgba(139,94,26,0.3), transparent); }
 .ornament-title {
+  display: flex; align-items: center; gap: 8px;
   font-size: 11px; font-weight: 600; letter-spacing: 2px;
   text-transform: uppercase; color: var(--gold);
-  display: flex; align-items: center; gap: 8px;
 }
-.ornament-gem {
-  width: 8px; height: 8px; background: var(--gold);
-  transform: rotate(45deg); border-radius: 1px;
-}
+.gem { width: 7px; height: 7px; background: var(--gold2); transform: rotate(45deg); border-radius: 1px; }
 
-/* ══ HOME — teacher grid ══ */
-#home-content { padding: 0 40px 40px; position: relative; z-index: 1; }
+/* ── HOME ── */
+#home-wrap { padding: 0 40px 40px; position: relative; z-index: 1; }
 
 .teacher-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 18px;
 }
 
 .teacher-card {
-  background: linear-gradient(145deg, var(--card), var(--card2));
-  border: 1px solid rgba(201,151,43,.2);
+  background: var(--card);
+  border: 1px solid var(--border);
   border-radius: var(--radius);
-  padding: 30px 20px 24px;
+  padding: 26px 18px 20px;
   text-align: center;
   cursor: pointer;
-  transition: transform .25s, border-color .25s, box-shadow .25s;
   position: relative; overflow: hidden;
+  transition: transform .22s, box-shadow .22s, border-color .22s;
 }
-
-/* Corner ornaments */
-.teacher-card::before,
-.teacher-card::after {
-  content: '';
-  position: absolute;
-  width: 24px; height: 24px;
-  border-color: rgba(201,151,43,.35);
-  border-style: solid;
-}
-.teacher-card::before { top: 10px; left: 10px; border-width: 1px 0 0 1px; }
-.teacher-card::after  { bottom: 10px; right: 10px; border-width: 0 1px 1px 0; }
-
+.teacher-card::before { content:''; position:absolute; top:8px; left:8px; width:18px; height:18px; border-top:1.5px solid rgba(139,94,26,0.3); border-left:1.5px solid rgba(139,94,26,0.3); }
+.teacher-card::after  { content:''; position:absolute; bottom:8px; right:8px; width:18px; height:18px; border-bottom:1.5px solid rgba(139,94,26,0.3); border-right:1.5px solid rgba(139,94,26,0.3); }
 .teacher-card:hover {
-  transform: translateY(-4px);
-  border-color: rgba(201,151,43,.6);
-  box-shadow: 0 12px 40px rgba(201,151,43,.12), 0 0 0 1px rgba(201,151,43,.1);
+  transform: translateY(-3px);
+  border-color: rgba(201,151,43,0.5);
+  box-shadow: 0 8px 28px rgba(139,94,26,0.12);
 }
 
-.t-avatar-ring {
-  width: 80px; height: 80px; border-radius: 50%; margin: 0 auto 16px;
-  padding: 3px;
-  background: linear-gradient(135deg, var(--gold), var(--gold2), var(--gold));
+.t-ring {
+  width: 70px; height: 70px; border-radius: 50%; margin: 0 auto 14px;
+  padding: 2.5px;
+  background: linear-gradient(135deg, var(--gold), var(--gold3));
 }
-.t-avatar-inner {
-  width: 100%; height: 100%; border-radius: 50%; overflow: hidden;
-  background: var(--card);
+.t-inner {
+  width: 100%; height: 100%; border-radius: 50%;
+  background: var(--bg);
   display: flex; align-items: center; justify-content: center;
-  font-size: 28px; font-weight: 700; color: var(--gold2);
+  font-size: 24px; font-weight: 700; color: var(--gold);
+  overflow: hidden;
 }
-.t-avatar-inner img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.t-inner img { width:100%; height:100%; object-fit:cover; display:block; }
 
-.teacher-name {
-  font-size: 15px; font-weight: 600; margin-bottom: 8px;
-  color: var(--text);
-}
-.teacher-count {
-  font-size: 12px; color: var(--muted);
-  display: flex; align-items: center; justify-content: center; gap: 5px;
-}
-.new-dot { width: 9px; height: 9px; border-radius: 50%; background: #ff4b4b; display: inline-block; margin-left: 6px; vertical-align: middle; }
+.t-name { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 6px; }
+.t-count { font-size: 12px; color: var(--muted); }
+.new-dot { width: 8px; height: 8px; border-radius: 50%; background: #ef4444; display: inline-block; margin-left: 5px; vertical-align: middle; }
 
-.empty-home { text-align: center; padding: 80px 20px; color: var(--muted); grid-column: 1/-1; }
-.empty-home .icon { font-size: 52px; margin-bottom: 14px; }
-.empty-home p { font-size: 15px; }
+.empty-home { text-align: center; padding: 70px 20px; color: var(--muted); grid-column: 1/-1; }
+.empty-home .icon { font-size: 48px; margin-bottom: 12px; }
 
-/* ══ CHAT ══ */
+/* ── CHAT ── */
 #chat { display: none; position: relative; z-index: 1; }
 
 .chat-header {
-  display: flex; align-items: center; gap: 14px;
-  padding: 14px 40px;
-  background: linear-gradient(180deg, rgba(7,20,40,.98), rgba(7,20,40,.9));
-  border-bottom: 1px solid rgba(201,151,43,.2);
-  position: sticky; top: 70px; z-index: 90;
-  backdrop-filter: blur(12px);
+  display: flex; align-items: center; gap: 12px;
+  padding: 12px 40px;
+  background: rgba(247,240,227,0.95);
+  border-bottom: 1px solid rgba(139,94,26,0.2);
+  position: sticky; top: 68px; z-index: 90;
+  backdrop-filter: blur(10px);
 }
-
 .back-btn {
-  background: rgba(201,151,43,.08); border: 1px solid rgba(201,151,43,.3);
-  color: var(--gold2); padding: 8px 16px; border-radius: 8px; cursor: pointer;
-  font-size: 13px; transition: background .2s;
+  background: rgba(139,94,26,0.07); border: 1px solid rgba(139,94,26,0.25);
+  color: var(--gold); padding: 7px 14px; border-radius: 8px;
+  cursor: pointer; font-size: 13px; transition: background .2s;
 }
-.back-btn:hover { background: rgba(201,151,43,.18); }
+.back-btn:hover { background: rgba(139,94,26,0.14); }
 
-.c-avatar-ring {
-  width: 46px; height: 46px; border-radius: 50%; padding: 2px; flex-shrink: 0;
-  background: linear-gradient(135deg, var(--gold), var(--gold2));
-}
-.c-avatar-inner {
-  width: 100%; height: 100%; border-radius: 50%; overflow: hidden;
-  background: var(--card);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 18px; font-weight: 700; color: var(--gold2);
-}
-.c-avatar-inner img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.c-ring { width: 44px; height: 44px; border-radius: 50%; padding: 2px; background: linear-gradient(135deg, var(--gold), var(--gold3)); flex-shrink: 0; }
+.c-inner { width:100%; height:100%; border-radius:50%; background:var(--bg); display:flex; align-items:center; justify-content:center; font-size:16px; font-weight:700; color:var(--gold); overflow:hidden; }
+.c-inner img { width:100%; height:100%; object-fit:cover; display:block; }
+.chat-name { font-size: 15px; font-weight: 600; color: var(--text); }
 
-.chat-teacher-name { font-size: 16px; font-weight: 600; }
+.messages { padding: 22px 40px; display: flex; flex-direction: column; gap: 16px; }
 
-.messages { padding: 24px 40px; display: flex; flex-direction: column; gap: 18px; }
-
-/* ══ MESSAGE ══ */
+/* ── MSG ── */
 .msg {
-  background: linear-gradient(145deg, var(--card), var(--card2));
-  border: 1px solid rgba(201,151,43,.15);
-  border-radius: 14px; padding: 18px 20px;
-  max-width: 860px; position: relative; overflow: hidden;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px 18px;
+  max-width: 840px;
+  position: relative;
 }
 .msg::before {
   content: '';
-  position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
-  background: linear-gradient(180deg, var(--gold), var(--gold2));
+  position: absolute; left: 0; top: 10px; bottom: 10px; width: 3px;
+  background: linear-gradient(180deg, var(--gold), var(--gold3));
   border-radius: 3px 0 0 3px;
 }
-
-.msg-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+.msg-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
 .msg-time { font-size: 11px; color: var(--muted); }
-.msg-type { font-size: 11px; padding: 3px 10px; border-radius: 20px; font-weight: 500; }
-.type-text  { background: rgba(34,197,94,.12);  color: #22c55e; }
-.type-image { background: rgba(168,85,247,.12); color: #a855f7; }
-.type-video { background: rgba(249,115,22,.12); color: #f97316; }
-.type-file  { background: rgba(234,179,8,.12);  color: #eab308; }
-.type-voice { background: rgba(236,72,153,.12); color: #ec4899; }
+.msg-type { font-size: 11px; padding: 2px 9px; border-radius: 20px; font-weight: 500; }
+.type-text  { background: rgba(34,197,94,.1);  color: #166534; }
+.type-image { background: rgba(139,94,26,.1);  color: var(--gold); }
+.type-video { background: rgba(217,119,6,.1);  color: #92400e; }
+.type-file  { background: rgba(180,83,9,.1);   color: #78350f; }
+.type-voice { background: rgba(159,122,234,.1);color: #5b21b6; }
+.new-badge { background: #ef4444; color: #fff; font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 20px; margin-left: 7px; }
+.msg-text { font-size: 14px; line-height: 1.7; color: rgba(61,32,8,.85); white-space: pre-wrap; }
 
-.new-badge { background: #ff4b4b; color: #fff; font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 20px; margin-left: 8px; }
-.msg-text { font-size: 14px; line-height: 1.7; color: rgba(238,242,255,.88); white-space: pre-wrap; }
+.msg-img-wrap { margin-top: 10px; cursor: zoom-in; border-radius: 8px; overflow: hidden; border: 1px solid var(--border); }
+.msg-img-wrap img { width:100%; display:block; max-height:420px; object-fit:contain; background:#f5ece0; }
+.zoom-hint { font-size: 11px; color: var(--muted); margin-top: 4px; }
 
-/* Image */
-.msg-img-wrap { margin-top: 12px; cursor: zoom-in; border-radius: 10px; overflow: hidden; border: 1px solid rgba(201,151,43,.15); }
-.msg-img-wrap img { width: 100%; display: block; max-height: 440px; object-fit: contain; background: #000; }
-.zoom-hint { font-size: 11px; color: var(--gold); margin-top: 5px; opacity: .7; }
+.msg-video-wrap { margin-top: 10px; border-radius: 8px; overflow: hidden; border: 1px solid var(--border); background: #1a0a00; }
+.msg-video-wrap video { width:100%; display:block; max-height:460px; }
 
-/* Video */
-.msg-video-wrap { margin-top: 12px; border-radius: 10px; overflow: hidden; border: 1px solid rgba(201,151,43,.15); background: #000; }
-.msg-video-wrap video { width: 100%; display: block; max-height: 480px; }
+.file-row { display:flex; align-items:center; gap:10px; padding:10px 14px; margin-top:10px; background:rgba(139,94,26,0.05); border:1px solid rgba(139,94,26,0.2); border-radius:8px; }
+.file-name { font-size:13px; font-weight:500; flex:1; word-break:break-all; color:var(--text); }
+.file-dl { font-size:11px; color:var(--gold); text-decoration:none; padding:4px 10px; border:1px solid rgba(139,94,26,0.3); border-radius:20px; white-space:nowrap; }
+.file-dl:hover { background:rgba(139,94,26,0.1); }
 
-/* File */
-.file-row {
-  display: flex; align-items: center; gap: 12px;
-  padding: 12px 16px; margin-top: 12px;
-  background: rgba(201,151,43,.06); border: 1px solid rgba(201,151,43,.2); border-radius: 10px;
+.empty-chat { text-align:center; padding:60px 20px; color:var(--muted); }
+
+/* ── LIGHTBOX ── */
+#lightbox { display:none; position:fixed; inset:0; background:rgba(0,0,0,.9); z-index:1000; align-items:center; justify-content:center; cursor:zoom-out; }
+#lightbox.open { display:flex; }
+#lightbox img { max-width:95vw; max-height:95vh; object-fit:contain; border-radius:8px; }
+#lb-close { position:fixed; top:18px; right:22px; color:#e8b84b; font-size:28px; cursor:pointer; }
+
+/* ── FEEDBACK ── */
+.fb-btn {
+  position:fixed; bottom:26px; right:26px; z-index:200;
+  background:linear-gradient(135deg, var(--gold), var(--gold2));
+  color:#fff; border:none; border-radius:50px;
+  padding:11px 20px; font-size:13px; font-weight:600; cursor:pointer;
+  box-shadow:0 4px 20px rgba(139,94,26,0.35); transition:transform .2s;
 }
-.file-name { font-size: 13px; font-weight: 500; flex: 1; word-break: break-all; }
-.file-dl {
-  font-size: 11px; color: var(--gold); text-decoration: none;
-  padding: 5px 12px; border: 1px solid rgba(201,151,43,.4); border-radius: 20px; white-space: nowrap;
-  transition: background .2s;
-}
-.file-dl:hover { background: rgba(201,151,43,.15); }
+.fb-btn:hover { transform:scale(1.04); }
 
-.empty-chat { text-align: center; padding: 60px 20px; color: var(--muted); }
-
-/* ══ LIGHTBOX ══ */
-#lightbox { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.94); z-index: 1000; align-items: center; justify-content: center; cursor: zoom-out; }
-#lightbox.open { display: flex; }
-#lightbox img { max-width: 95vw; max-height: 95vh; object-fit: contain; border-radius: 8px; }
-#lb-close { position: fixed; top: 18px; right: 22px; color: var(--gold2); font-size: 30px; cursor: pointer; opacity: .8; line-height: 1; }
-#lb-close:hover { opacity: 1; }
-
-/* ══ FEEDBACK ══ */
-.feedback-btn {
-  position: fixed; bottom: 28px; right: 28px; z-index: 200;
-  background: linear-gradient(135deg, var(--gold), var(--gold2));
-  color: #0a1628; border: none; border-radius: 50px;
-  padding: 12px 22px; font-size: 13px; font-weight: 700; cursor: pointer;
-  box-shadow: 0 4px 24px rgba(201,151,43,.4); transition: transform .2s;
-}
-.feedback-btn:hover { transform: scale(1.05); }
-
-.fb-modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.65); z-index: 300; align-items: center; justify-content: center; }
-.fb-modal.open { display: flex; }
+.fb-modal { display:none; position:fixed; inset:0; background:rgba(0,0,0,.45); z-index:300; align-items:center; justify-content:center; }
+.fb-modal.open { display:flex; }
 .fb-box {
-  background: linear-gradient(145deg, var(--card), var(--card2));
-  border: 1px solid rgba(201,151,43,.3); border-radius: 18px;
-  padding: 30px; width: 420px; max-width: 92vw; position: relative;
+  background:var(--card); border:1px solid rgba(139,94,26,0.3); border-radius:16px;
+  padding:28px; width:400px; max-width:92vw; position:relative;
 }
-.fb-box::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, var(--gold), transparent); border-radius: 18px 18px 0 0; }
-.fb-box h3 { font-family: 'Playfair Display', serif; font-size: 18px; color: var(--gold2); margin-bottom: 6px; }
-.fb-box p  { font-size: 13px; color: var(--muted); margin-bottom: 18px; }
-.fb-box textarea { width: 100%; background: rgba(255,255,255,.04); border: 1px solid rgba(201,151,43,.25); border-radius: 10px; color: var(--text); padding: 12px 14px; font-size: 14px; font-family: inherit; resize: vertical; min-height: 110px; outline: none; }
-.fb-box textarea:focus { border-color: var(--gold); }
-.fb-actions { display: flex; gap: 10px; margin-top: 14px; justify-content: flex-end; }
-.btn-cancel { background: none; border: 1px solid var(--border); color: var(--muted); padding: 9px 18px; border-radius: 8px; cursor: pointer; font-size: 13px; }
-.btn-send { background: linear-gradient(135deg, var(--gold), var(--gold2)); border: none; color: #0a1628; padding: 9px 22px; border-radius: 8px; cursor: pointer; font-size: 13px; font-weight: 700; }
-.fb-success { text-align: center; padding: 20px 0; }
-.fb-success .icon { font-size: 42px; margin-bottom: 10px; }
+.fb-box::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg,transparent,var(--gold2),transparent); border-radius:16px 16px 0 0; }
+.fb-box h3 { font-family:'Playfair Display',serif; font-size:17px; color:var(--text); margin-bottom:5px; }
+.fb-box p  { font-size:12px; color:var(--muted); margin-bottom:14px; }
+.fb-box textarea { width:100%; background:rgba(139,94,26,0.04); border:1px solid rgba(139,94,26,0.2); border-radius:8px; color:var(--text); padding:11px 13px; font-size:13px; font-family:inherit; resize:vertical; min-height:100px; outline:none; }
+.fb-box textarea:focus { border-color:var(--gold2); }
+.fb-actions { display:flex; gap:8px; margin-top:12px; justify-content:flex-end; }
+.btn-cancel { background:none; border:1px solid var(--border); color:var(--muted); padding:8px 16px; border-radius:8px; cursor:pointer; font-size:12px; }
+.btn-send { background:linear-gradient(135deg,var(--gold),var(--gold2)); border:none; color:#fff; padding:8px 18px; border-radius:8px; cursor:pointer; font-size:12px; font-weight:600; }
+.fb-ok { text-align:center; padding:18px 0; }
+.fb-ok .icon { font-size:38px; margin-bottom:8px; }
 </style>
 </head>
 <body>
 
+<!-- Burchak bezaklari -->
+<svg class="corner-deco tl" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" opacity="0.18">
+  <path d="M0,0 L90,0 L90,8 L8,8 L8,90 L0,90 Z" stroke="#8b5e1a" stroke-width="1.2"/>
+  <path d="M0,0 L65,0 L65,6 L6,6 L6,65 L0,65 Z" stroke="#8b5e1a" stroke-width="0.6"/>
+  <circle cx="16" cy="16" r="5" stroke="#c9972b" stroke-width="0.8"/>
+  <circle cx="16" cy="16" r="10" stroke="#8b5e1a" stroke-width="0.4"/>
+  <path d="M35,0 Q45,10 35,20 Q25,10 35,0" stroke="#c9972b" stroke-width="0.6"/>
+  <path d="M55,0 Q65,10 55,20 Q45,10 55,0" stroke="#8b5e1a" stroke-width="0.5"/>
+  <path d="M0,35 Q10,45 20,35 Q10,25 0,35" stroke="#c9972b" stroke-width="0.6"/>
+  <path d="M0,55 Q10,65 20,55 Q10,45 0,55" stroke="#8b5e1a" stroke-width="0.5"/>
+</svg>
+<svg class="corner-deco tr" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" opacity="0.18">
+  <path d="M0,0 L90,0 L90,8 L8,8 L8,90 L0,90 Z" stroke="#8b5e1a" stroke-width="1.2"/>
+  <path d="M0,0 L65,0 L65,6 L6,6 L6,65 L0,65 Z" stroke="#8b5e1a" stroke-width="0.6"/>
+  <circle cx="16" cy="16" r="5" stroke="#c9972b" stroke-width="0.8"/>
+  <circle cx="16" cy="16" r="10" stroke="#8b5e1a" stroke-width="0.4"/>
+  <path d="M35,0 Q45,10 35,20 Q25,10 35,0" stroke="#c9972b" stroke-width="0.6"/>
+  <path d="M0,35 Q10,45 20,35 Q10,25 0,35" stroke="#c9972b" stroke-width="0.6"/>
+</svg>
+<svg class="corner-deco bl" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" opacity="0.18">
+  <path d="M0,0 L90,0 L90,8 L8,8 L8,90 L0,90 Z" stroke="#8b5e1a" stroke-width="1.2"/>
+  <path d="M0,0 L65,0 L65,6 L6,6 L6,65 L0,65 Z" stroke="#8b5e1a" stroke-width="0.6"/>
+  <circle cx="16" cy="16" r="5" stroke="#c9972b" stroke-width="0.8"/>
+  <circle cx="16" cy="16" r="10" stroke="#8b5e1a" stroke-width="0.4"/>
+  <path d="M35,0 Q45,10 35,20 Q25,10 35,0" stroke="#c9972b" stroke-width="0.6"/>
+  <path d="M0,35 Q10,45 20,35 Q10,25 0,35" stroke="#c9972b" stroke-width="0.6"/>
+</svg>
+<svg class="corner-deco br" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" opacity="0.18">
+  <path d="M0,0 L90,0 L90,8 L8,8 L8,90 L0,90 Z" stroke="#8b5e1a" stroke-width="1.2"/>
+  <path d="M0,0 L65,0 L65,6 L6,6 L6,65 L0,65 Z" stroke="#8b5e1a" stroke-width="0.6"/>
+  <circle cx="16" cy="16" r="5" stroke="#c9972b" stroke-width="0.8"/>
+  <circle cx="16" cy="16" r="10" stroke="#8b5e1a" stroke-width="0.4"/>
+  <path d="M35,0 Q45,10 35,20 Q25,10 35,0" stroke="#c9972b" stroke-width="0.6"/>
+  <path d="M0,35 Q10,45 20,35 Q10,25 0,35" stroke="#c9972b" stroke-width="0.6"/>
+</svg>
+
 <header>
   <div class="logo">
-    <div class="logo-emblem">🏛️</div>
+    <div class="logo-icon">🏛️</div>
     <div class="logo-text">
       <h1>Interaktiv Doska</h1>
       <p>Ustozlar materiali — real vaqt</p>
     </div>
   </div>
-  <div style="display:flex;align-items:center;gap:20px">
+  <div style="display:flex;align-items:center;gap:18px">
     <div class="live-badge"><div class="dot"></div>Jonli</div>
-    <div class="clock-wrap">
+    <div>
       <div class="clock-time" id="clock">00:00:00</div>
       <div class="clock-date" id="clock-date"></div>
     </div>
@@ -312,10 +305,10 @@ header::before {
 <div id="home">
   <div class="ornament">
     <div class="ornament-line"></div>
-    <div class="ornament-title"><div class="ornament-gem"></div>Ustozlar<div class="ornament-gem"></div></div>
+    <div class="ornament-title"><div class="gem"></div>Ustozlar<div class="gem"></div></div>
     <div class="ornament-line"></div>
   </div>
-  <div id="home-content">
+  <div id="home-wrap">
     <div class="teacher-grid" id="teacher-grid">
       <div class="empty-home"><div class="icon">👨‍🏫</div><p>Hali ustozlar yo'q</p></div>
     </div>
@@ -326,20 +319,20 @@ header::before {
 <div id="chat">
   <div class="chat-header">
     <button class="back-btn" onclick="goHome()">← Orqaga</button>
-    <div id="chat-avatar"></div>
-    <div class="chat-teacher-name" id="chat-name"></div>
+    <div id="chat-av"></div>
+    <div class="chat-name" id="chat-name"></div>
   </div>
   <div class="messages" id="messages"></div>
 </div>
 
 <!-- LIGHTBOX -->
-<div id="lightbox" onclick="closeLightbox()">
-  <span id="lb-close">✕</span>
+<div id="lightbox" onclick="closeLb()">
+  <span id="lb-close" onclick="closeLb()">✕</span>
   <img id="lb-img" src="" alt="">
 </div>
 
 <!-- FEEDBACK -->
-<button class="feedback-btn" onclick="openFb()">✦ Fikr bildirish</button>
+<button class="fb-btn" onclick="openFb()">✦ Fikr bildirish</button>
 <div class="fb-modal" id="fb-modal">
   <div class="fb-box">
     <div id="fb-form">
@@ -351,14 +344,13 @@ header::before {
         <button class="btn-send" onclick="sendFb()">Yuborish</button>
       </div>
     </div>
-    <div id="fb-ok" class="fb-success" style="display:none">
+    <div id="fb-ok" class="fb-ok" style="display:none">
       <div class="icon">✅</div><p>Fikringiz qabul qilindi!</p>
     </div>
   </div>
 </div>
 
 <script>
-// Clock
 function tick(){
   const n=new Date();
   document.getElementById('clock').textContent=n.toLocaleTimeString('uz-UZ',{hour12:false});
@@ -372,10 +364,13 @@ let data={teachers:{},materials:[]};
 let currentT=null;
 let seen=new Set();
 
-function tAvatar(name,photo,big){
+function tAv(name,photo,big){
+  const s=big?70:44;
+  const cls=big?'t-ring':'c-ring';
+  const icls=big?'t-inner':'c-inner';
+  const fs=big?24:16;
   const init=name.charAt(0).toUpperCase();
-  if(big) return `<div class="t-avatar-ring"><div class="t-avatar-inner">${photo?`<img src="${photo}" onerror="this.outerHTML='${init}'">`:`${init}`}</div></div>`;
-  return `<div class="c-avatar-ring"><div class="c-avatar-inner">${photo?`<img src="${photo}" onerror="this.outerHTML='${init}'">`:`${init}`}</div></div>`;
+  return `<div class="${cls}" style="width:${s}px;height:${s}px"><div class="${icls}" style="font-size:${fs}px">${photo?`<img src="${photo}" onerror="this.outerHTML='${init}'">`:`${init}`}</div></div>`;
 }
 
 function fIcon(n=''){
@@ -387,7 +382,6 @@ function fIcon(n=''){
   if(['zip','rar'].includes(e))return'🗜️';
   return'📎';
 }
-
 function tLabel(t){return{text:'📝 Matn',image:'🖼️ Rasm',video:'🎬 Video',file:'📎 Fayl',voice:'🎙️ Ovoz'}[t]||t;}
 
 function renderHome(){
@@ -402,9 +396,9 @@ function renderHome(){
     const cnt=ms.filter(m=>m.teacher_id===tid).length;
     const hasNew=ms.some(m=>m.teacher_id===tid&&!seen.has(m.id));
     return`<div class="teacher-card" onclick="openChat('${tid}')">
-      ${tAvatar(t.name,t.photo,true)}
-      <div class="teacher-name">${t.name}${hasNew?'<span class="new-dot"></span>':''}</div>
-      <div class="teacher-count">📚 ${cnt} ta material</div>
+      ${tAv(t.name,t.photo,true)}
+      <div class="t-name">${t.name}${hasNew?'<span class="new-dot"></span>':''}</div>
+      <div class="t-count">📚 ${cnt} ta material</div>
     </div>`;
   }).join('');
 }
@@ -412,7 +406,7 @@ function renderHome(){
 function openChat(tid){
   currentT=tid;
   const t=data.teachers[tid]; if(!t)return;
-  document.getElementById('chat-avatar').innerHTML=tAvatar(t.name,t.photo,false);
+  document.getElementById('chat-av').innerHTML=tAv(t.name,t.photo,false);
   document.getElementById('chat-name').textContent=t.name;
   renderMsgs(tid);
   document.getElementById('home').style.display='none';
@@ -428,16 +422,16 @@ function renderMsgs(tid){
     let body='';
     if(m.type==='text'){
       body=`<div class="msg-text">${m.content.replace(/</g,'&lt;')}</div>`;
-    } else if(m.type==='image'&&m.file_url){
+    }else if(m.type==='image'&&m.file_url){
       const c=m.content?`<div class="msg-text" style="margin-bottom:8px">${m.content.replace(/</g,'&lt;')}</div>`:'';
       body=`${c}<div class="msg-img-wrap" onclick="openLb('${m.file_url}')"><img src="${m.file_url}" loading="lazy"></div><div class="zoom-hint">🔍 Kattalashtirish uchun bosing</div>`;
-    } else if(m.type==='video'&&m.file_url){
+    }else if(m.type==='video'&&m.file_url){
       const c=m.content?`<div class="msg-text" style="margin-bottom:8px">${m.content.replace(/</g,'&lt;')}</div>`:'';
       body=`${c}<div class="msg-video-wrap"><video controls playsinline preload="metadata"><source src="${m.file_url}" type="video/mp4"><source src="${m.file_url}"></video></div>`;
-    } else if(m.type==='file'&&m.file_url){
+    }else if(m.type==='file'&&m.file_url){
       const c=m.content?`<div class="msg-text" style="margin-bottom:8px">${m.content.replace(/</g,'&lt;')}</div>`:'';
-      body=`${c}<div class="file-row"><span style="font-size:22px">${fIcon(m.file_name)}</span><span class="file-name">${m.file_name||'fayl'}</span><a class="file-dl" href="${m.file_url}" target="_blank" download>⬇ Yuklab olish</a></div>`;
-    } else if(m.type==='voice'&&m.file_url){
+      body=`${c}<div class="file-row"><span style="font-size:20px">${fIcon(m.file_name)}</span><span class="file-name">${m.file_name||'fayl'}</span><a class="file-dl" href="${m.file_url}" target="_blank" download>⬇ Yuklab olish</a></div>`;
+    }else if(m.type==='voice'&&m.file_url){
       body=`<audio src="${m.file_url}" controls preload="metadata" style="width:100%;margin-top:8px"></audio>`;
     }
     return`<div class="msg">
@@ -457,8 +451,8 @@ function goHome(){
 }
 
 function openLb(url){document.getElementById('lb-img').src=url;document.getElementById('lightbox').classList.add('open');document.body.style.overflow='hidden';}
-function closeLightbox(){document.getElementById('lightbox').classList.remove('open');document.getElementById('lb-img').src='';document.body.style.overflow='';}
-document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeLightbox();closeFb();}});
+function closeLb(){document.getElementById('lightbox').classList.remove('open');document.getElementById('lb-img').src='';document.body.style.overflow='';}
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeLb();closeFb();}});
 
 async function fetchData(){
   try{

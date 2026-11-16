@@ -5,129 +5,317 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Interaktiv Doska</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-  :root {
-    --bg: #050d1a; --surface: #0a1628; --card: #0f1f36;
-    --border: #1a3155; --accent: #1a6eff; --accent2: #00cfff;
-    --text: #e8f0fe; --muted: #6b8ab5; --radius: 14px;
-  }
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@700&display=swap');
 
-  header {
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 16px 40px; background: var(--surface);
-    border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 100;
-  }
-  .logo { display: flex; align-items: center; gap: 12px; }
-  .logo-icon { width: 40px; height: 40px; background: linear-gradient(135deg, var(--accent), var(--accent2)); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 18px; }
-  .logo-text h1 { font-size: 18px; font-weight: 700; }
-  .logo-text p  { font-size: 11px; color: var(--muted); }
-  .dot { width: 8px; height: 8px; border-radius: 50%; background: #22c55e; animation: pulse 2s infinite; display: inline-block; margin-right: 6px; }
-  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.5;transform:scale(.8)} }
-  .clock-time { font-size: 26px; font-weight: 300; letter-spacing: 2px; color: var(--accent2); font-variant-numeric: tabular-nums; }
-  .clock-date { font-size: 11px; color: var(--muted); text-align: right; }
+:root {
+  --bg:       #030d1f;
+  --surface:  #071428;
+  --card:     #0a1c35;
+  --card2:    #0d2140;
+  --border:   #1a3a6b;
+  --gold:     #c9972b;
+  --gold2:    #f0c060;
+  --gold-dim: rgba(201,151,43,.15);
+  --blue:     #1a6eff;
+  --cyan:     #00cfff;
+  --text:     #eef2ff;
+  --muted:    #6b8ab5;
+  --radius:   16px;
+}
 
-  /* HOME */
-  #home { padding: 40px; }
-  .home-title { font-size: 13px; color: var(--muted); text-transform: uppercase; letter-spacing: 1.2px; margin-bottom: 24px; font-weight: 500; }
-  .teacher-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px; }
-  .teacher-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 28px 20px; text-align: center; cursor: pointer; transition: transform .2s, border-color .2s; }
-  .teacher-card:hover { transform: translateY(-3px); border-color: var(--accent); }
-  .t-avatar-wrap { width: 72px; height: 72px; border-radius: 50%; margin: 0 auto 14px; overflow: hidden; border: 3px solid var(--accent); }
-  .t-avatar-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; }
-  .t-initials { width: 72px; height: 72px; border-radius: 50%; margin: 0 auto 14px; background: linear-gradient(135deg, var(--accent), var(--accent2)); display: flex; align-items: center; justify-content: center; font-size: 26px; font-weight: 700; border: 3px solid var(--accent); }
-  .teacher-name { font-size: 15px; font-weight: 600; margin-bottom: 6px; }
-  .teacher-count { font-size: 12px; color: var(--muted); }
-  .new-dot { width: 10px; height: 10px; border-radius: 50%; background: #ff4b4b; display: inline-block; margin-left: 6px; vertical-align: middle; }
-  .empty-home { text-align: center; padding: 80px 20px; color: var(--muted); }
-  .empty-home .icon { font-size: 52px; margin-bottom: 14px; }
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; overflow-x: hidden; }
 
-  /* CHAT */
-  #chat { display: none; }
-  .chat-header { display: flex; align-items: center; gap: 14px; padding: 16px 40px; background: var(--surface); border-bottom: 1px solid var(--border); position: sticky; top: 65px; z-index: 90; }
-  .back-btn { background: none; border: 1px solid var(--border); color: var(--text); padding: 8px 16px; border-radius: 8px; cursor: pointer; font-size: 13px; transition: border-color .2s; }
-  .back-btn:hover { border-color: var(--accent); }
-  .c-avatar-wrap { width: 42px; height: 42px; border-radius: 50%; overflow: hidden; border: 2px solid var(--accent); flex-shrink: 0; }
-  .c-avatar-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; }
-  .c-initials { width: 42px; height: 42px; border-radius: 50%; background: linear-gradient(135deg, var(--accent), var(--accent2)); display: flex; align-items: center; justify-content: center; font-size: 17px; font-weight: 700; border: 2px solid var(--accent); flex-shrink: 0; }
-  .chat-teacher-name { font-size: 16px; font-weight: 600; }
-  .messages { padding: 24px 40px; display: flex; flex-direction: column; gap: 16px; }
+/* ══ GIRIX PATTERN (SVG background) ══ */
+body::before {
+  content: '';
+  position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%23c9972b' stroke-width='0.4' opacity='0.08'%3E%3Cpolygon points='40,2 78,22 78,58 40,78 2,58 2,22'/%3E%3Cpolygon points='40,12 68,27 68,53 40,68 12,53 12,27'/%3E%3Cline x1='40' y1='2' x2='40' y2='78'/%3E%3Cline x1='2' y1='22' x2='78' y2='58'/%3E%3Cline x1='78' y1='22' x2='2' y2='58'/%3E%3C/g%3E%3C/svg%3E");
+  background-size: 80px 80px;
+}
 
-  /* MESSAGE */
-  .msg { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 16px 18px; max-width: 820px; }
-  .msg-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
-  .msg-time { font-size: 11px; color: var(--muted); }
-  .msg-type { font-size: 11px; padding: 2px 8px; border-radius: 20px; }
-  .type-text  { background: rgba(34,197,94,.12);  color: #22c55e; }
-  .type-image { background: rgba(168,85,247,.12); color: #a855f7; }
-  .type-video { background: rgba(249,115,22,.12); color: #f97316; }
-  .type-file  { background: rgba(234,179,8,.12);  color: #eab308; }
-  .type-voice { background: rgba(236,72,153,.12); color: #ec4899; }
-  .msg-text { font-size: 14px; line-height: 1.65; color: rgba(232,240,254,.9); white-space: pre-wrap; }
-  .new-badge { background: #ff4b4b; color: #fff; font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 20px; margin-left: 8px; }
-  .empty-chat { text-align: center; padding: 60px 20px; color: var(--muted); }
+/* ══ HEADER ══ */
+header {
+  position: sticky; top: 0; z-index: 100;
+  background: linear-gradient(180deg, rgba(7,20,40,.98) 0%, rgba(7,20,40,.92) 100%);
+  border-bottom: 1px solid rgba(201,151,43,.3);
+  backdrop-filter: blur(16px);
+  padding: 0 40px;
+  display: flex; align-items: center; justify-content: space-between;
+  height: 70px;
+}
 
-  /* IMAGE — clickable */
-  .msg-img-wrap { margin-top: 10px; cursor: zoom-in; border-radius: 8px; overflow: hidden; background: var(--surface); }
-  .msg-img-wrap img { width: 100%; display: block; max-height: 400px; object-fit: contain; transition: opacity .2s; }
-  .msg-img-wrap:hover img { opacity: .9; }
+/* Gold top line */
+header::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, transparent, var(--gold), var(--gold2), var(--gold), transparent);
+}
 
-  /* VIDEO */
-  .msg-video-wrap { margin-top: 10px; border-radius: 8px; overflow: hidden; background: #000; position: relative; }
-  .msg-video-wrap video { width: 100%; display: block; max-height: 480px; background: #000; }
+.logo { display: flex; align-items: center; gap: 14px; }
 
-  /* FILE */
-  .file-row { display: flex; align-items: center; gap: 10px; padding: 10px 14px; background: var(--surface); border-radius: 8px; margin-top: 10px; border: 1px solid var(--border); }
-  .file-name { font-size: 13px; font-weight: 500; flex: 1; word-break: break-all; }
-  .file-dl { font-size: 11px; color: var(--accent); text-decoration: none; padding: 4px 10px; border: 1px solid var(--accent); border-radius: 20px; white-space: nowrap; }
-  .file-dl:hover { background: var(--accent); color: #fff; }
+.logo-emblem {
+  width: 44px; height: 44px; border-radius: 10px; position: relative;
+  background: linear-gradient(135deg, #0d2550, #1a3a6b);
+  border: 1px solid rgba(201,151,43,.5);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px;
+  box-shadow: 0 0 20px rgba(201,151,43,.2);
+}
 
-  /* LIGHTBOX */
-  #lightbox { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.92); z-index: 1000; align-items: center; justify-content: center; cursor: zoom-out; }
-  #lightbox.open { display: flex; }
-  #lightbox img { max-width: 95vw; max-height: 95vh; object-fit: contain; border-radius: 8px; box-shadow: 0 0 60px rgba(0,0,0,.8); }
-  #lightbox-close { position: fixed; top: 20px; right: 24px; color: #fff; font-size: 32px; cursor: pointer; line-height: 1; opacity: .8; }
-  #lightbox-close:hover { opacity: 1; }
+.logo-text h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 20px; font-weight: 700;
+  background: linear-gradient(135deg, var(--gold2), var(--gold));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  letter-spacing: .3px;
+}
 
-  /* FEEDBACK */
-  .feedback-btn { position: fixed; bottom: 28px; right: 28px; background: linear-gradient(135deg, var(--accent), var(--accent2)); color: #fff; border: none; border-radius: 50px; padding: 12px 22px; font-size: 13px; font-weight: 600; cursor: pointer; z-index: 200; box-shadow: 0 4px 20px rgba(26,110,255,.4); transition: transform .2s; }
-  .feedback-btn:hover { transform: scale(1.05); }
-  .feedback-modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.6); z-index: 300; align-items: center; justify-content: center; }
-  .feedback-modal.open { display: flex; }
-  .feedback-box { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 28px; width: 420px; max-width: 90vw; }
-  .feedback-box h3 { font-size: 17px; font-weight: 600; margin-bottom: 6px; }
-  .feedback-box p  { font-size: 13px; color: var(--muted); margin-bottom: 16px; }
-  .feedback-box textarea { width: 100%; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; color: var(--text); padding: 12px; font-size: 14px; font-family: inherit; resize: vertical; min-height: 110px; outline: none; }
-  .feedback-box textarea:focus { border-color: var(--accent); }
-  .feedback-actions { display: flex; gap: 10px; margin-top: 14px; justify-content: flex-end; }
-  .btn-cancel { background: none; border: 1px solid var(--border); color: var(--muted); padding: 9px 18px; border-radius: 8px; cursor: pointer; font-size: 13px; }
-  .btn-send { background: var(--accent); border: none; color: #fff; padding: 9px 20px; border-radius: 8px; cursor: pointer; font-size: 13px; font-weight: 600; }
-  .btn-send:hover { background: #1558d4; }
-  .feedback-success { text-align: center; padding: 20px 0; }
-  .feedback-success .icon { font-size: 42px; margin-bottom: 10px; }
+.logo-text p { font-size: 11px; color: var(--muted); margin-top: 1px; }
+
+.live-badge {
+  display: flex; align-items: center; gap: 6px;
+  background: rgba(34,197,94,.1); border: 1px solid rgba(34,197,94,.3);
+  border-radius: 20px; padding: 4px 10px; font-size: 11px; color: #22c55e;
+}
+.dot { width: 7px; height: 7px; border-radius: 50%; background: #22c55e; animation: pulse 2s infinite; }
+@keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.4;transform:scale(.7)} }
+
+.clock-wrap { text-align: right; }
+.clock-time { font-size: 28px; font-weight: 300; letter-spacing: 3px; color: var(--cyan); font-variant-numeric: tabular-nums; }
+.clock-date { font-size: 11px; color: var(--muted); margin-top: 1px; }
+
+/* ══ ORNAMENT DIVIDER ══ */
+.ornament {
+  display: flex; align-items: center; gap: 12px;
+  margin: 32px 40px 20px;
+  position: relative; z-index: 1;
+}
+.ornament-line { flex: 1; height: 1px; background: linear-gradient(90deg, transparent, rgba(201,151,43,.4), transparent); }
+.ornament-title {
+  font-size: 11px; font-weight: 600; letter-spacing: 2px;
+  text-transform: uppercase; color: var(--gold);
+  display: flex; align-items: center; gap: 8px;
+}
+.ornament-gem {
+  width: 8px; height: 8px; background: var(--gold);
+  transform: rotate(45deg); border-radius: 1px;
+}
+
+/* ══ HOME — teacher grid ══ */
+#home-content { padding: 0 40px 40px; position: relative; z-index: 1; }
+
+.teacher-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 20px;
+}
+
+.teacher-card {
+  background: linear-gradient(145deg, var(--card), var(--card2));
+  border: 1px solid rgba(201,151,43,.2);
+  border-radius: var(--radius);
+  padding: 30px 20px 24px;
+  text-align: center;
+  cursor: pointer;
+  transition: transform .25s, border-color .25s, box-shadow .25s;
+  position: relative; overflow: hidden;
+}
+
+/* Corner ornaments */
+.teacher-card::before,
+.teacher-card::after {
+  content: '';
+  position: absolute;
+  width: 24px; height: 24px;
+  border-color: rgba(201,151,43,.35);
+  border-style: solid;
+}
+.teacher-card::before { top: 10px; left: 10px; border-width: 1px 0 0 1px; }
+.teacher-card::after  { bottom: 10px; right: 10px; border-width: 0 1px 1px 0; }
+
+.teacher-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(201,151,43,.6);
+  box-shadow: 0 12px 40px rgba(201,151,43,.12), 0 0 0 1px rgba(201,151,43,.1);
+}
+
+.t-avatar-ring {
+  width: 80px; height: 80px; border-radius: 50%; margin: 0 auto 16px;
+  padding: 3px;
+  background: linear-gradient(135deg, var(--gold), var(--gold2), var(--gold));
+}
+.t-avatar-inner {
+  width: 100%; height: 100%; border-radius: 50%; overflow: hidden;
+  background: var(--card);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 28px; font-weight: 700; color: var(--gold2);
+}
+.t-avatar-inner img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+.teacher-name {
+  font-size: 15px; font-weight: 600; margin-bottom: 8px;
+  color: var(--text);
+}
+.teacher-count {
+  font-size: 12px; color: var(--muted);
+  display: flex; align-items: center; justify-content: center; gap: 5px;
+}
+.new-dot { width: 9px; height: 9px; border-radius: 50%; background: #ff4b4b; display: inline-block; margin-left: 6px; vertical-align: middle; }
+
+.empty-home { text-align: center; padding: 80px 20px; color: var(--muted); grid-column: 1/-1; }
+.empty-home .icon { font-size: 52px; margin-bottom: 14px; }
+.empty-home p { font-size: 15px; }
+
+/* ══ CHAT ══ */
+#chat { display: none; position: relative; z-index: 1; }
+
+.chat-header {
+  display: flex; align-items: center; gap: 14px;
+  padding: 14px 40px;
+  background: linear-gradient(180deg, rgba(7,20,40,.98), rgba(7,20,40,.9));
+  border-bottom: 1px solid rgba(201,151,43,.2);
+  position: sticky; top: 70px; z-index: 90;
+  backdrop-filter: blur(12px);
+}
+
+.back-btn {
+  background: rgba(201,151,43,.08); border: 1px solid rgba(201,151,43,.3);
+  color: var(--gold2); padding: 8px 16px; border-radius: 8px; cursor: pointer;
+  font-size: 13px; transition: background .2s;
+}
+.back-btn:hover { background: rgba(201,151,43,.18); }
+
+.c-avatar-ring {
+  width: 46px; height: 46px; border-radius: 50%; padding: 2px; flex-shrink: 0;
+  background: linear-gradient(135deg, var(--gold), var(--gold2));
+}
+.c-avatar-inner {
+  width: 100%; height: 100%; border-radius: 50%; overflow: hidden;
+  background: var(--card);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px; font-weight: 700; color: var(--gold2);
+}
+.c-avatar-inner img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+.chat-teacher-name { font-size: 16px; font-weight: 600; }
+
+.messages { padding: 24px 40px; display: flex; flex-direction: column; gap: 18px; }
+
+/* ══ MESSAGE ══ */
+.msg {
+  background: linear-gradient(145deg, var(--card), var(--card2));
+  border: 1px solid rgba(201,151,43,.15);
+  border-radius: 14px; padding: 18px 20px;
+  max-width: 860px; position: relative; overflow: hidden;
+}
+.msg::before {
+  content: '';
+  position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
+  background: linear-gradient(180deg, var(--gold), var(--gold2));
+  border-radius: 3px 0 0 3px;
+}
+
+.msg-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+.msg-time { font-size: 11px; color: var(--muted); }
+.msg-type { font-size: 11px; padding: 3px 10px; border-radius: 20px; font-weight: 500; }
+.type-text  { background: rgba(34,197,94,.12);  color: #22c55e; }
+.type-image { background: rgba(168,85,247,.12); color: #a855f7; }
+.type-video { background: rgba(249,115,22,.12); color: #f97316; }
+.type-file  { background: rgba(234,179,8,.12);  color: #eab308; }
+.type-voice { background: rgba(236,72,153,.12); color: #ec4899; }
+
+.new-badge { background: #ff4b4b; color: #fff; font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 20px; margin-left: 8px; }
+.msg-text { font-size: 14px; line-height: 1.7; color: rgba(238,242,255,.88); white-space: pre-wrap; }
+
+/* Image */
+.msg-img-wrap { margin-top: 12px; cursor: zoom-in; border-radius: 10px; overflow: hidden; border: 1px solid rgba(201,151,43,.15); }
+.msg-img-wrap img { width: 100%; display: block; max-height: 440px; object-fit: contain; background: #000; }
+.zoom-hint { font-size: 11px; color: var(--gold); margin-top: 5px; opacity: .7; }
+
+/* Video */
+.msg-video-wrap { margin-top: 12px; border-radius: 10px; overflow: hidden; border: 1px solid rgba(201,151,43,.15); background: #000; }
+.msg-video-wrap video { width: 100%; display: block; max-height: 480px; }
+
+/* File */
+.file-row {
+  display: flex; align-items: center; gap: 12px;
+  padding: 12px 16px; margin-top: 12px;
+  background: rgba(201,151,43,.06); border: 1px solid rgba(201,151,43,.2); border-radius: 10px;
+}
+.file-name { font-size: 13px; font-weight: 500; flex: 1; word-break: break-all; }
+.file-dl {
+  font-size: 11px; color: var(--gold); text-decoration: none;
+  padding: 5px 12px; border: 1px solid rgba(201,151,43,.4); border-radius: 20px; white-space: nowrap;
+  transition: background .2s;
+}
+.file-dl:hover { background: rgba(201,151,43,.15); }
+
+.empty-chat { text-align: center; padding: 60px 20px; color: var(--muted); }
+
+/* ══ LIGHTBOX ══ */
+#lightbox { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.94); z-index: 1000; align-items: center; justify-content: center; cursor: zoom-out; }
+#lightbox.open { display: flex; }
+#lightbox img { max-width: 95vw; max-height: 95vh; object-fit: contain; border-radius: 8px; }
+#lb-close { position: fixed; top: 18px; right: 22px; color: var(--gold2); font-size: 30px; cursor: pointer; opacity: .8; line-height: 1; }
+#lb-close:hover { opacity: 1; }
+
+/* ══ FEEDBACK ══ */
+.feedback-btn {
+  position: fixed; bottom: 28px; right: 28px; z-index: 200;
+  background: linear-gradient(135deg, var(--gold), var(--gold2));
+  color: #0a1628; border: none; border-radius: 50px;
+  padding: 12px 22px; font-size: 13px; font-weight: 700; cursor: pointer;
+  box-shadow: 0 4px 24px rgba(201,151,43,.4); transition: transform .2s;
+}
+.feedback-btn:hover { transform: scale(1.05); }
+
+.fb-modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.65); z-index: 300; align-items: center; justify-content: center; }
+.fb-modal.open { display: flex; }
+.fb-box {
+  background: linear-gradient(145deg, var(--card), var(--card2));
+  border: 1px solid rgba(201,151,43,.3); border-radius: 18px;
+  padding: 30px; width: 420px; max-width: 92vw; position: relative;
+}
+.fb-box::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, var(--gold), transparent); border-radius: 18px 18px 0 0; }
+.fb-box h3 { font-family: 'Playfair Display', serif; font-size: 18px; color: var(--gold2); margin-bottom: 6px; }
+.fb-box p  { font-size: 13px; color: var(--muted); margin-bottom: 18px; }
+.fb-box textarea { width: 100%; background: rgba(255,255,255,.04); border: 1px solid rgba(201,151,43,.25); border-radius: 10px; color: var(--text); padding: 12px 14px; font-size: 14px; font-family: inherit; resize: vertical; min-height: 110px; outline: none; }
+.fb-box textarea:focus { border-color: var(--gold); }
+.fb-actions { display: flex; gap: 10px; margin-top: 14px; justify-content: flex-end; }
+.btn-cancel { background: none; border: 1px solid var(--border); color: var(--muted); padding: 9px 18px; border-radius: 8px; cursor: pointer; font-size: 13px; }
+.btn-send { background: linear-gradient(135deg, var(--gold), var(--gold2)); border: none; color: #0a1628; padding: 9px 22px; border-radius: 8px; cursor: pointer; font-size: 13px; font-weight: 700; }
+.fb-success { text-align: center; padding: 20px 0; }
+.fb-success .icon { font-size: 42px; margin-bottom: 10px; }
 </style>
 </head>
 <body>
 
 <header>
   <div class="logo">
-    <div class="logo-icon">📋</div>
+    <div class="logo-emblem">🏛️</div>
     <div class="logo-text">
       <h1>Interaktiv Doska</h1>
-      <p><span class="dot"></span>Jonli</p>
+      <p>Ustozlar materiali — real vaqt</p>
     </div>
   </div>
-  <div style="text-align:right">
-    <div class="clock-time" id="clock">00:00:00</div>
-    <div class="clock-date" id="clock-date"></div>
+  <div style="display:flex;align-items:center;gap:20px">
+    <div class="live-badge"><div class="dot"></div>Jonli</div>
+    <div class="clock-wrap">
+      <div class="clock-time" id="clock">00:00:00</div>
+      <div class="clock-date" id="clock-date"></div>
+    </div>
   </div>
 </header>
 
 <!-- HOME -->
 <div id="home">
-  <div style="padding:40px">
-    <div class="home-title">Ustozlar</div>
+  <div class="ornament">
+    <div class="ornament-line"></div>
+    <div class="ornament-title"><div class="ornament-gem"></div>Ustozlar<div class="ornament-gem"></div></div>
+    <div class="ornament-line"></div>
+  </div>
+  <div id="home-content">
     <div class="teacher-grid" id="teacher-grid">
       <div class="empty-home"><div class="icon">👨‍🏫</div><p>Hali ustozlar yo'q</p></div>
     </div>
@@ -146,192 +334,150 @@
 
 <!-- LIGHTBOX -->
 <div id="lightbox" onclick="closeLightbox()">
-  <span id="lightbox-close">✕</span>
-  <img id="lightbox-img" src="" alt="">
+  <span id="lb-close">✕</span>
+  <img id="lb-img" src="" alt="">
 </div>
 
 <!-- FEEDBACK -->
-<button class="feedback-btn" onclick="openFeedback()">💬 Fikr bildirish</button>
-<div class="feedback-modal" id="feedback-modal">
-  <div class="feedback-box">
+<button class="feedback-btn" onclick="openFb()">✦ Fikr bildirish</button>
+<div class="fb-modal" id="fb-modal">
+  <div class="fb-box">
     <div id="fb-form">
       <h3>Fikr bildirish</h3>
       <p>Kamchilik yoki takliflaringizni yozing</p>
       <textarea id="fb-text" placeholder="Yozing..."></textarea>
-      <div class="feedback-actions">
-        <button class="btn-cancel" onclick="closeFeedback()">Bekor</button>
-        <button class="btn-send" onclick="sendFeedback()">Yuborish</button>
+      <div class="fb-actions">
+        <button class="btn-cancel" onclick="closeFb()">Bekor</button>
+        <button class="btn-send" onclick="sendFb()">Yuborish</button>
       </div>
     </div>
-    <div id="fb-success" class="feedback-success" style="display:none">
-      <div class="icon">✅</div>
-      <p>Fikringiz qabul qilindi!</p>
+    <div id="fb-ok" class="fb-success" style="display:none">
+      <div class="icon">✅</div><p>Fikringiz qabul qilindi!</p>
     </div>
   </div>
 </div>
 
 <script>
-  // Clock
-  function updateClock() {
-    const now = new Date();
-    document.getElementById('clock').textContent = now.toLocaleTimeString('uz-UZ',{hour12:false});
-    const days=['Yakshanba','Dushanba','Seshanba','Chorshanba','Payshanba','Juma','Shanba'];
-    const months=['yanvar','fevral','mart','aprel','may','iyun','iyul','avgust','sentabr','oktabr','noyabr','dekabr'];
-    document.getElementById('clock-date').textContent=`${days[now.getDay()]}, ${now.getDate()} ${months[now.getMonth()]} ${now.getFullYear()}`;
+// Clock
+function tick(){
+  const n=new Date();
+  document.getElementById('clock').textContent=n.toLocaleTimeString('uz-UZ',{hour12:false});
+  const D=['Yakshanba','Dushanba','Seshanba','Chorshanba','Payshanba','Juma','Shanba'];
+  const M=['yanvar','fevral','mart','aprel','may','iyun','iyul','avgust','sentabr','oktabr','noyabr','dekabr'];
+  document.getElementById('clock-date').textContent=`${D[n.getDay()]}, ${n.getDate()} ${M[n.getMonth()]} ${n.getFullYear()}`;
+}
+tick(); setInterval(tick,1000);
+
+let data={teachers:{},materials:[]};
+let currentT=null;
+let seen=new Set();
+
+function tAvatar(name,photo,big){
+  const init=name.charAt(0).toUpperCase();
+  if(big) return `<div class="t-avatar-ring"><div class="t-avatar-inner">${photo?`<img src="${photo}" onerror="this.outerHTML='${init}'">`:`${init}`}</div></div>`;
+  return `<div class="c-avatar-ring"><div class="c-avatar-inner">${photo?`<img src="${photo}" onerror="this.outerHTML='${init}'">`:`${init}`}</div></div>`;
+}
+
+function fIcon(n=''){
+  const e=(n.split('.').pop()||'').toLowerCase();
+  if(e==='pdf')return'📄';
+  if(['ppt','pptx'].includes(e))return'📊';
+  if(['doc','docx'].includes(e))return'📝';
+  if(['xls','xlsx'].includes(e))return'📈';
+  if(['zip','rar'].includes(e))return'🗜️';
+  return'📎';
+}
+
+function tLabel(t){return{text:'📝 Matn',image:'🖼️ Rasm',video:'🎬 Video',file:'📎 Fayl',voice:'🎙️ Ovoz'}[t]||t;}
+
+function renderHome(){
+  const grid=document.getElementById('teacher-grid');
+  const ts=data.teachers||{};
+  const ms=data.materials||[];
+  if(!Object.keys(ts).length){
+    grid.innerHTML=`<div class="empty-home"><div class="icon">👨‍🏫</div><p>Hali ustozlar yo'q</p></div>`;
+    return;
   }
-  updateClock(); setInterval(updateClock,1000);
+  grid.innerHTML=Object.entries(ts).map(([tid,t])=>{
+    const cnt=ms.filter(m=>m.teacher_id===tid).length;
+    const hasNew=ms.some(m=>m.teacher_id===tid&&!seen.has(m.id));
+    return`<div class="teacher-card" onclick="openChat('${tid}')">
+      ${tAvatar(t.name,t.photo,true)}
+      <div class="teacher-name">${t.name}${hasNew?'<span class="new-dot"></span>':''}</div>
+      <div class="teacher-count">📚 ${cnt} ta material</div>
+    </div>`;
+  }).join('');
+}
 
-  let allData={teachers:{},materials:[]};
-  let currentTeacher=null;
-  let seenIds=new Set();
+function openChat(tid){
+  currentT=tid;
+  const t=data.teachers[tid]; if(!t)return;
+  document.getElementById('chat-avatar').innerHTML=tAvatar(t.name,t.photo,false);
+  document.getElementById('chat-name').textContent=t.name;
+  renderMsgs(tid);
+  document.getElementById('home').style.display='none';
+  document.getElementById('chat').style.display='block';
+}
 
-  function makeAvatar(name,photo,big){
-    const s=big?72:42;
-    if(photo){
-      return `<div class="${big?'t-avatar-wrap':'c-avatar-wrap'}" style="width:${s}px;height:${s}px"><img src="${photo}" onerror="this.parentElement.innerHTML='<div style=\'width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:${big?26:17}px;font-weight:700\'>${name.charAt(0).toUpperCase()}</div>'"></div>`;
+function renderMsgs(tid){
+  const ms=(data.materials||[]).filter(m=>m.teacher_id===tid);
+  const box=document.getElementById('messages');
+  if(!ms.length){box.innerHTML=`<div class="empty-chat">📭 Hali material yuborilmagan</div>`;return;}
+  box.innerHTML=ms.map(m=>{
+    const isNew=!seen.has(m.id); seen.add(m.id);
+    let body='';
+    if(m.type==='text'){
+      body=`<div class="msg-text">${m.content.replace(/</g,'&lt;')}</div>`;
+    } else if(m.type==='image'&&m.file_url){
+      const c=m.content?`<div class="msg-text" style="margin-bottom:8px">${m.content.replace(/</g,'&lt;')}</div>`:'';
+      body=`${c}<div class="msg-img-wrap" onclick="openLb('${m.file_url}')"><img src="${m.file_url}" loading="lazy"></div><div class="zoom-hint">🔍 Kattalashtirish uchun bosing</div>`;
+    } else if(m.type==='video'&&m.file_url){
+      const c=m.content?`<div class="msg-text" style="margin-bottom:8px">${m.content.replace(/</g,'&lt;')}</div>`:'';
+      body=`${c}<div class="msg-video-wrap"><video controls playsinline preload="metadata"><source src="${m.file_url}" type="video/mp4"><source src="${m.file_url}"></video></div>`;
+    } else if(m.type==='file'&&m.file_url){
+      const c=m.content?`<div class="msg-text" style="margin-bottom:8px">${m.content.replace(/</g,'&lt;')}</div>`:'';
+      body=`${c}<div class="file-row"><span style="font-size:22px">${fIcon(m.file_name)}</span><span class="file-name">${m.file_name||'fayl'}</span><a class="file-dl" href="${m.file_url}" target="_blank" download>⬇ Yuklab olish</a></div>`;
+    } else if(m.type==='voice'&&m.file_url){
+      body=`<audio src="${m.file_url}" controls preload="metadata" style="width:100%;margin-top:8px"></audio>`;
     }
-    return `<div class="${big?'t-initials':'c-initials'}" style="width:${s}px;height:${s}px;font-size:${big?26:17}px">${name.charAt(0).toUpperCase()}</div>`;
-  }
+    return`<div class="msg">
+      <div class="msg-header">
+        <div><span class="msg-type type-${m.type}">${tLabel(m.type)}</span>${isNew?'<span class="new-badge">YANGI</span>':''}</div>
+        <span class="msg-time">🕐 ${m.time}</span>
+      </div>${body}</div>`;
+  }).join('');
+}
 
-  function fileIcon(n=''){
-    const e=(n.split('.').pop()||'').toLowerCase();
-    if(e==='pdf')return'📄';
-    if(['ppt','pptx'].includes(e))return'📊';
-    if(['doc','docx'].includes(e))return'📝';
-    if(['xls','xlsx'].includes(e))return'📈';
-    if(['zip','rar','7z'].includes(e))return'🗜️';
-    return'📎';
-  }
+function goHome(){
+  currentT=null;
+  document.querySelectorAll('video').forEach(v=>v.pause());
+  document.getElementById('chat').style.display='none';
+  document.getElementById('home').style.display='block';
+  renderHome();
+}
 
-  function typeLabel(t){
-    return{text:'📝 Matn',image:'🖼️ Rasm',video:'🎬 Video',file:'📎 Fayl',voice:'🎙️ Ovoz'}[t]||t;
-  }
+function openLb(url){document.getElementById('lb-img').src=url;document.getElementById('lightbox').classList.add('open');document.body.style.overflow='hidden';}
+function closeLightbox(){document.getElementById('lightbox').classList.remove('open');document.getElementById('lb-img').src='';document.body.style.overflow='';}
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeLightbox();closeFb();}});
 
-  function renderHome(){
-    const grid=document.getElementById('teacher-grid');
-    const teachers=allData.teachers||{};
-    const materials=allData.materials||[];
-    if(!Object.keys(teachers).length){
-      grid.innerHTML=`<div class="empty-home"><div class="icon">👨‍🏫</div><p>Hali ustozlar yo'q</p></div>`;
-      return;
-    }
-    grid.innerHTML=Object.entries(teachers).map(([tid,t])=>{
-      const count=materials.filter(m=>m.teacher_id===tid).length;
-      const hasNew=materials.some(m=>m.teacher_id===tid&&!seenIds.has(m.id));
-      return`<div class="teacher-card" onclick="openChat('${tid}')">
-        ${makeAvatar(t.name,t.photo,true)}
-        <div class="teacher-name">${t.name}${hasNew?'<span class="new-dot"></span>':''}</div>
-        <div class="teacher-count">${count} ta material</div>
-      </div>`;
-    }).join('');
-  }
+async function fetchData(){
+  try{
+    const r=await fetch('/materials.json?t='+Date.now());
+    data=await r.json();
+    if(currentT)renderMsgs(currentT); else renderHome();
+  }catch(e){}
+}
+fetchData(); setInterval(fetchData,5000);
 
-  function openChat(tid){
-    currentTeacher=tid;
-    const t=allData.teachers[tid];
-    if(!t)return;
-    document.getElementById('chat-avatar').innerHTML=makeAvatar(t.name,t.photo,false);
-    document.getElementById('chat-name').textContent=t.name;
-    renderMessages(tid);
-    document.getElementById('home').style.display='none';
-    document.getElementById('chat').style.display='block';
-  }
-
-  function renderMessages(tid){
-    const msgs=(allData.materials||[]).filter(m=>m.teacher_id===tid);
-    const box=document.getElementById('messages');
-    if(!msgs.length){
-      box.innerHTML=`<div class="empty-chat">📭 Hali material yuborilmagan</div>`;
-      return;
-    }
-    box.innerHTML=msgs.map(m=>{
-      const isNew=!seenIds.has(m.id);
-      seenIds.add(m.id);
-      let content='';
-      if(m.type==='text'){
-        content=`<div class="msg-text">${m.content.replace(/</g,'&lt;')}</div>`;
-      } else if(m.type==='image'&&m.file_url){
-        const cap=m.content?`<div class="msg-text" style="margin-bottom:8px">${m.content.replace(/</g,'&lt;')}</div>`:'';
-        content=`${cap}<div class="msg-img-wrap" onclick="openLightbox('${m.file_url}')">
-          <img src="${m.file_url}" loading="lazy" title="Kattalashtirish uchun bosing">
-        </div><div style="font-size:11px;color:var(--muted);margin-top:5px;text-align:right">🔍 Kattalashtirish uchun bosing</div>`;
-      } else if(m.type==='video'&&m.file_url){
-        const cap=m.content?`<div class="msg-text" style="margin-bottom:8px">${m.content.replace(/</g,'&lt;')}</div>`:'';
-        content=`${cap}<div class="msg-video-wrap">
-          <video controls playsinline preload="metadata" style="width:100%;max-height:480px;background:#000">
-            <source src="${m.file_url}" type="video/mp4">
-            <source src="${m.file_url}">
-          </video>
-        </div>`;
-      } else if(m.type==='file'&&m.file_url){
-        const cap=m.content?`<div class="msg-text" style="margin-bottom:8px">${m.content.replace(/</g,'&lt;')}</div>`:'';
-        content=`${cap}<div class="file-row">
-          <span style="font-size:22px">${fileIcon(m.file_name)}</span>
-          <span class="file-name">${m.file_name||'fayl'}</span>
-          <a class="file-dl" href="${m.file_url}" target="_blank" download>⬇ Yuklab olish</a>
-        </div>`;
-      } else if(m.type==='voice'&&m.file_url){
-        content=`<audio src="${m.file_url}" controls preload="metadata" style="width:100%;margin-top:8px"></audio>`;
-      }
-      return`<div class="msg">
-        <div class="msg-header">
-          <div><span class="msg-type type-${m.type}">${typeLabel(m.type)}</span>${isNew?'<span class="new-badge">YANGI</span>':''}</div>
-          <span class="msg-time">🕐 ${m.time}</span>
-        </div>
-        ${content}
-      </div>`;
-    }).join('');
-  }
-
-  function goHome(){
-    currentTeacher=null;
-    // Pause all videos
-    document.querySelectorAll('video').forEach(v=>v.pause());
-    document.getElementById('chat').style.display='none';
-    document.getElementById('home').style.display='block';
-    renderHome();
-  }
-
-  // Lightbox
-  function openLightbox(url){
-    document.getElementById('lightbox-img').src=url;
-    document.getElementById('lightbox').classList.add('open');
-    document.body.style.overflow='hidden';
-  }
-  function closeLightbox(){
-    document.getElementById('lightbox').classList.remove('open');
-    document.getElementById('lightbox-img').src='';
-    document.body.style.overflow='';
-  }
-  document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLightbox();});
-
-  async function fetchData(){
-    try{
-      const res=await fetch('/materials.json?t='+Date.now());
-      allData=await res.json();
-      if(currentTeacher)renderMessages(currentTeacher);
-      else renderHome();
-    }catch(e){}
-  }
-  fetchData();
-  setInterval(fetchData,5000);
-
-  // Feedback
-  function openFeedback(){
-    document.getElementById('fb-form').style.display='block';
-    document.getElementById('fb-success').style.display='none';
-    document.getElementById('fb-text').value='';
-    document.getElementById('feedback-modal').classList.add('open');
-  }
-  function closeFeedback(){document.getElementById('feedback-modal').classList.remove('open');}
-  async function sendFeedback(){
-    const text=document.getElementById('fb-text').value.trim();
-    if(!text)return;
-    try{await fetch('/feedback',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({text})});}catch(e){}
-    document.getElementById('fb-form').style.display='none';
-    document.getElementById('fb-success').style.display='block';
-    setTimeout(closeFeedback,2000);
-  }
+function openFb(){document.getElementById('fb-form').style.display='block';document.getElementById('fb-ok').style.display='none';document.getElementById('fb-text').value='';document.getElementById('fb-modal').classList.add('open');}
+function closeFb(){document.getElementById('fb-modal').classList.remove('open');}
+async function sendFb(){
+  const t=document.getElementById('fb-text').value.trim(); if(!t)return;
+  try{await fetch('/feedback',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({text:t})});}catch(e){}
+  document.getElementById('fb-form').style.display='none';
+  document.getElementById('fb-ok').style.display='block';
+  setTimeout(closeFb,2000);
+}
 </script>
 </body>
 </html>
